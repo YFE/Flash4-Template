@@ -1,0 +1,30 @@
+// main: style.styl
+
+// @font-face {
+//     font-family: 'chathuralight';
+//     src: url('../font/chathura-light-webfont.woff2') format('woff2'),
+//          url('../font/chathura-light-webfont.woff') format('woff');
+//     font-weight: normal;
+//     font-style: normal;
+// }
+// body {
+//     &::before {
+//         content : ''
+//         font-family:'chathuralight';
+//     }
+// }
+
+@font-face {
+    font-family: 'handlee';
+    src: url('../font/handlee-webfont.woff2') format('woff2'),
+         url('../font/handlee-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    &::after {
+        content : ''
+        font-family:'handlee';
+    }
+}
