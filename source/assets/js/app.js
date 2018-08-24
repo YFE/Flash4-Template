@@ -31,27 +31,21 @@
 				self.suitHeight = -(1280 - _desHeight > 0 ? 1280 - _desHeight : 0)/2 + (_screenHeight > 1280 ? (_screenHeight -1280)/2:0);
 				self.initHeight = _desHeight;
 
-				if( self.page['cloading'] ){
-					// 竖屏设计
-					self.stage.desHeight = self.initHeight;
-					self.page['cloading'].y = self.suitHeight;
-
-					// 横屏设计
-					// self.stage.desWidth = self.initHeight;
-					// self.page['cloading'].x = self.suitHeight;
-
-					self.stage.resize();
-				}
+				ems.trigger('resize');
 			}).trigger('resize');
+
+			//单文件模式
+			annie._isReleased="123";
 			
 			self.stage = new annie.Stage('app', 800, self.initHeight, 30, annie.StageScaleMode.FIXED_HEIGHT, 0);
 
 			// 横屏设计
 			// self.stage = new annie.Stage('app', self.initHeight, 800, 30, annie.StageScaleMode.FIXED_WIDTH, 0);
 
+			self.stage.autoResize = false;
 			self.stage.autoSteering = true;
-			self.stage.addEventListener(annie.Event.INIT_TO_STAGE, function (e) {
-				Flash2x.loadScene(['cloading'], function (per) {
+			self.stage.addEventListener(annie.Event.ON_INIT_STAGE, function (e) {
+				annie.loadScene(['cloading'], function (per) {
 					self.loadProcess(per);
 				}, function (result) {
 					self.page['cloading'] = gm.getFlaClass('cloading');
@@ -60,6 +54,18 @@
 					
 					// 全面屏 横屏设计
 					// self.page['cloading'].x = self.suitHeight;
+
+					ems.on('resize',function(){
+						// 竖屏设计
+						self.stage.desHeight = self.initHeight;
+						self.page['cloading'].y = self.suitHeight;
+	
+						// 横屏设计
+						// self.stage.desWidth = self.initHeight;
+						// self.page['cloading'].x = self.suitHeight;
+	
+						self.stage.resize();
+					})
 
 					//font handlee
 					self.page['cloading'].loadBox.loadText.loadNum.font = 'handlee';
@@ -75,7 +81,7 @@
 					self.stage.addChild(self.page['cloading']);
 
 					// 加载其他
-					Flash2x.loadScene(['cmain'], function (per) {
+					annie.loadScene(['cmain'], function (per) {
 						self.loadProcess(per);
 					}, function (result) {
 						if (result.sceneId == result.sceneTotal) {
@@ -113,7 +119,7 @@
 	};
 	var myapp = new MyApp;
 	
-	window.F2xExtend = function () {
+	window.A2xExtend = function () {
 		var _extend = {};
 		try {
 			if (__extends) {

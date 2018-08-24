@@ -1,13 +1,8 @@
-# Flash-Template
-动画项目开发模板
+# Flash4-Template
+动画项目开发模板 for annie4 新版本
 
 ## 最近更新
 
-### 2017-12-02
-* 去掉Seajs引入方式 
-* annie添加on/off支持，可替代addEventListener/removeEventListener（太长了）
-* 将weui相关引用改为内部引用
-* 修改annie引擎图片加载方式，使得在当前全面使用HTTPS下，可以批量下载图片
 
 ## 使用步骤
 
@@ -27,7 +22,9 @@ cd source
 fis3 release dev -d -w
 ```
 根据提示安装相应插件。
-
+```
+npm install -g fis-xxx-xxx
+```
 
 ## 目录结构
 
@@ -50,18 +47,18 @@ fis3 release dev -d -w
 - index.php `入口`
 
 ## 已引进可以直接使用的库
-jQuery 3.2.1
+jQuery 3.3.1
 
-jweixin 1.2.0 微信jssdk
+jweixin 1.3.2 
+> 微信jssdk，支持小程序内嵌H5接口
 
-weui.css 1.1.2
+weui.css 1.1.3
 > https://github.com/weui/weui
 
-weui.js 1.1.2
+weui.js 1.1.4
 > https://github.com/weui/weui.js/blob/master/docs/README.md
 
 gm.js
-
 目前主要用于监测部署以及微信分享设置，可前往源码一览。
 
 ```javascript
@@ -70,10 +67,26 @@ gm.wxData
 gm.loadImg()
 ```
 
+loadash.js
+> 实用工具库
+> https://www.lodashjs.com/
+
+
+
 ## 开发流程
 - clone 模板
-- 把fla放进 /fla 里
-- 设置好fla属性，输出
-- 修改build.xml里的输出位置
-- 进入到相应目录，运行 ant
-- 进入到 /source ，运行 fis3 release dev -d -w 进行调测
+- 把fla放进 fla 里
+- 设置fla属性输出目录为campaign，输出
+- 进入 fla/campaign，运行命令
+```
+cd fla/campaign
+npm install
+gulp build
+gulp released
+```
+- 进入到 source ，运行 fis3 release dev -d -w 进行调测
+```
+cd source
+fis3 release dev -d -w
+fis3 release prod -d
+```

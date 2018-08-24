@@ -1,0 +1,15 @@
+
+# VS CODE #
+.vscode
+
+
+# NODE #
+node_modules
+package-lock.json
+
+# Mac #
+.DS_Store
+
+# Project #
+release
+dist
