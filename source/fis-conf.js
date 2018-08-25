@@ -21,6 +21,13 @@ fis.match('assets/js/libs/*.js', {
     release: ''
 });
 
+//自动去除console.log等调试信息
+fis.config.set('settings.optimizer.uglify-js', {
+    compress : {
+        // drop_console: true
+    }
+});
+
 // 合并时过滤关键字不压缩。
 fis.match('*.js', {
     optimizer: fis.plugin('uglify-js', {

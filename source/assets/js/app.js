@@ -35,7 +35,7 @@
 			}).trigger('resize');
 
 			//单文件模式
-			annie._isReleased="123";
+			// annie._isReleased="123";
 			
 			self.stage = new annie.Stage('app', 800, self.initHeight, 30, annie.StageScaleMode.FIXED_HEIGHT, 0);
 
@@ -71,9 +71,9 @@
 					self.page['cloading'].loadBox.loadText.loadNum.font = 'handlee';
 
 					self.page['cloading'].loadBox.gotoAndPlay('in');
-					self.page['cloading'].loadBox.ender = function () {
+					self.page['cloading'].loadBox.addEventListener(gm.et.END_FRAME,function () {
 						self.page['cloading'].loadBox.visible = false;
-					}
+					})
 					self.loadProcess = function (_per) {
 						self.page['cloading'].loadBox.loadText.loadNum.text = _per + "%";
 					}
@@ -100,6 +100,7 @@
         loadProcess : function(_per){
         },
         loadComplete : function(){
+			this.listener();
             this.init();
         },
 		page : {},
@@ -108,8 +109,6 @@
 
 			//事件触发
 			//ems.trigger('xx',function(a){})
-
-			self.listener();
 		},
 		listener: function(){
 			var self = this;
