@@ -327,6 +327,52 @@
             }
         }
     };
+
+    gm.transName = function(str,_maxlen,_etra) {
+        // 将名称拆分为数组,注意: 这样会将表情拆分为两项,其值为代理对.
+        // 并且因为,代理对无法被浏览器识别,所以它们的值可能会被转化为 U+feff
+        var strArr = str.split(""),
+            result = "",
+            totalLen = 0,
+            isSub = false;
+
+        for (var idx = 0; idx < strArr.length; idx++) {
+            // 超出长度,退出程序
+            if (_maxlen && totalLen >= _maxlen) {
+                isSub = true;
+                break;
+            };
+            var val = strArr[idx];
+            // 英文,增加长度1
+            if (/[a-zA-Z0-9]/.test(val)) {
+                totalLen = 1 + (+totalLen);
+                result += val;
+            }
+            // 中文,增加长度2
+            else if (/[\u4e00-\u9fa5]/.test(val) || /[\uff00-\uffff]/.test(val)) {
+                totalLen = 2 + (+totalLen);
+                result += val;
+            }
+            // 遇到代理字符,将其转换为 "口", 不增加长度
+            else if (/[\ud800-\udfff]/.test(val)) {
+                // 代理对长度为2,
+                result += strArr[idx];
+                if (/[\ud800-\udfff]/.test(strArr[idx + 1])) {
+                    // 跳过下一个
+                    idx++;
+                }
+                // 将代理对替换为 "口"
+                result += strArr[idx];
+                totalLen = 2 + (+totalLen);
+            }
+        };
+        if (_etra && isSub) {
+            result += _etra;
+        }
+
+        return [result,totalLen];
+    }
+
     gm.isLoadEnd = false;
     gm.load = function() {
         gm.ems.trigger('load');
