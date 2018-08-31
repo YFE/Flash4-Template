@@ -244,18 +244,18 @@
             }
         }
 
-        _mc.addEventListener(annie.MouseEvent.MOUSE_DOWN, function (e) {
+        _mc.on(gm.mt.MOUSE_DOWN, function (e) {
             _startX = e.stageX;
             _startY = e.stageY;
-        }, false);
+        });
 
-        _mc.addEventListener(annie.MouseEvent.MOUSE_UP, function (e) {
+        _mc.on(gm.mt.MOUSE_UP, function (e) {
             _endX = e.stageX - _startX;
             _endY = e.stageY - _startY;
             isEventMatch(_startX, _startY, _endX, _endY) && _cb(e);
             _startY = 0;
             _startX = 0;
-        }, false);
+        });
     }
 
     gm.wxData = global.wxData = {
