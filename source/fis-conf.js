@@ -70,6 +70,10 @@ fis.match('*.css', {
 //fis3 release dev -d -w 如在后面再加上-w 为实时检测变化
 fis.media('dev').match('**', {
     deploy: [
+        fis.plugin('replace', {
+            from: /\.swf/,
+            to: '.js'
+        }),
         fis.plugin('skip-packed'),
         fis.plugin('local-deliver', {
             to: '../release/test'
@@ -95,6 +99,10 @@ var currVersion = getVersion();
 //fis3 release pro -d
 fis.media('pro').match('**', {
     deploy: [
+        fis.plugin('replace', {
+            from: /\.swf/,
+            to: '.js'
+        }),
         fis.plugin('skip-packed'),
         fis.plugin('local-deliver', {
             to: '../release/' + currVersion
@@ -114,6 +122,10 @@ fis.media('prod').match('**', {
         return true;
     },
     deploy: [
+        fis.plugin('replace', {
+            from: /\.swf/,
+            to: '.js'
+        }),
         fis.plugin('skip-packed'),
         fis.plugin('local-deliver', {
             to: '../release/' + currVersion
@@ -121,4 +133,4 @@ fis.media('prod').match('**', {
     ]
 });
 
-console.log("本次版本号为： "+currVersion);
+console.log("本次版本号为： "+ currVersion);
