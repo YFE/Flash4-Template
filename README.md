@@ -2,6 +2,9 @@
 动画项目开发模板 for annie4 新版本
 
 ## 最近更新
+### 2018-09-17
+* 页面背景色改回受style.styl里bgcolor控制。
+* 添加 loading 里的判定，避免 loading 被加载两次。
 
 ### 2018-09-14
 * 添加纯CSS横竖屏提示，为 html 添加样式类 竖屏提示 `.portrait` 、横屏提示 `.landscape ` 即可生效。
