@@ -1,6 +1,6 @@
 ;(function(global, undefined) {
     var gm = global.gm = {
-        version: "1.0.1"
+        version: "1.0.2"
     };
 
     var eventManager = function() {
@@ -247,7 +247,7 @@
         _mc.on(gm.mt.MOUSE_DOWN, function (e) {
             _startX = e.stageX;
             _startY = e.stageY;
-        });
+        },false);
 
         _mc.on(gm.mt.MOUSE_UP, function (e) {
             _endX = e.stageX - _startX;
@@ -255,7 +255,7 @@
             isEventMatch(_startX, _startY, _endX, _endY) && _cb(e);
             _startY = 0;
             _startX = 0;
-        });
+        },false);
     }
 
     gm.wxData = global.wxData = {
