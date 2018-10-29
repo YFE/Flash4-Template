@@ -43,7 +43,7 @@
 			// self.stage = new annie.Stage('app', self.initHeight, 800, 30, annie.StageScaleMode.FIXED_WIDTH, 0);
 
 			self.stage.autoResize = false;
-			self.stage.autoSteering = true;
+			self.stage.autoSteering = false;
 			self.stage.addEventListener(annie.Event.ON_INIT_STAGE, function (e) {
 				annie.loadScene(['cloading'], function (per) {
 					self.loadProcess(per);
