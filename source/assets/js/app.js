@@ -35,7 +35,7 @@
 			}).trigger('resize');
 
 			//单文件模式
-			// annie._isReleased="123";
+			annie._isReleased="123";
 
 			self.stage = new annie.Stage('app', 800, self.initHeight, 30, annie.StageScaleMode.FIXED_HEIGHT, 0);
 
@@ -116,13 +116,12 @@
 		init: function () {
 			var self = this;
 
-			//事件触发
-			//ems.trigger('xx',function(a){})
+			
 		},
 		listener: function () {
 			var self = this;
-			//事件注册
-			//ems.on('xx',function(a){})
+			
+			
 		}
 	};
 	var myapp = new MyApp;
