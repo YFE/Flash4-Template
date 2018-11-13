@@ -171,7 +171,7 @@
             } catch (e) {}
             try {
                 if( typeof MtaH5 == 'object'){
-                    window.history.pushState(null,null,'#/page/' + _page);
+                    // window.history.pushState(null,null,'#/page/' + _page);
                     setTimeout(function(){
                         MtaH5.pgv();
                     },16);
@@ -185,10 +185,10 @@
             try {
                 var _data  = {};
                 if( typeof MtaH5 == 'object'){
-                    if( _event ){
-                        _data[_event] = 'true'
+                    if( _opt_label ){
+                        _data[_opt_label] = _opt_value || 'true'
                     }
-                    MtaH5.clickStat(_category,_data);
+                    MtaH5.clickStat(_event,_data);
                 }
             } catch (e) {}
         },

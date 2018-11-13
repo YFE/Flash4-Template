@@ -72,10 +72,7 @@
 						//font handlee
 						self.page['cloading'].loadBox.loadText.loadNum.font = 'handlee';
 
-						self.page['cloading'].loadBox.gotoAndPlay('in');
-						self.page['cloading'].loadBox.addEventListener(gm.et.END_FRAME, function () {
-							self.page['cloading'].loadBox.visible = false;
-						})
+						self.page['cloading'].loadBox.gotoAndPlay(2);
 						self.loadProcess = function (_per) {
 							self.page['cloading'].loadBox.loadText.loadNum.text = _per + "%";
 						}
@@ -91,7 +88,6 @@
 
 								self.page['cmain'] = gm.getFlaClass('cmain');
 								self.page['cloading'].container.addChild(self.page['cmain']);
-								self.page['cloading'].loadBox.gotoAndPlay('out');
 								annie.Tween.to(self.page['cloading'].loadBox,0.3,{
 									alpha: 0,
 									onComplete : function(){
