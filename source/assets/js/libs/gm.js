@@ -202,61 +202,6 @@
         }
     }
 
-    gm.getFlaClass = function (_name) {
-        var _flaClass = window[_name][_name.replace(/(\w)/, function (v) { return v.toUpperCase() })];
-        if (window[_name] && _flaClass) {
-            return new window[_name][_name.replace(/(\w)/, function (v) { return v.toUpperCase() })];
-        }
-    }
-
-    gm.atouch = function(_mc, _type, _cb) {
-        var _startX = 0,
-            _startY = 0,
-            _endX = 0,
-            _endY = 0,
-            _dict = 80;
-        var isEventMatch = function (_sx, _sy, _ex, _ey) {
-            if (_sx == 0 && _sy == 0) {
-                return false;
-            }
-            if (_type == "tap") {
-                if (Math.abs(_ex) < 10 && Math.abs(_ey) < 10) {
-                    return true;
-                }
-                return false;
-            }
-            if (_type.indexOf("swipe") > -1) {
-                if (Math.abs(_ex) <= _dict && Math.abs(_ey) <= _dict) {
-                    return false;
-                }
-                if (_type == "swipeup") {
-                    return _ey < -_dict && _ey < _ex;
-                }
-                if (_type == "swipedown") {
-                    return _ey > _dict && _ey > _ex
-                }
-                if (_type == "swipeleft") {
-                    return _ex < -_dict && _ex < _ey
-                }
-                if (_type == "swiperight") {
-                    return _ex > _dict && _ex > _ey
-                }
-            }
-        }
-
-        _mc.on(gm.mt.MOUSE_DOWN, function (e) {
-            _startX = e.stageX;
-            _startY = e.stageY;
-        },false);
-
-        _mc.on(gm.mt.MOUSE_UP, function (e) {
-            _endX = e.stageX - _startX;
-            _endY = e.stageY - _startY;
-            isEventMatch(_startX, _startY, _endX, _endY) && _cb(e);
-            _startY = 0;
-            _startX = 0;
-        },false);
-    }
 
     gm.wxData = global.wxData = {
         imgUrl: "",
@@ -371,6 +316,82 @@
         }
 
         return [result,totalLen];
+    }
+
+    gm.getFlaClass = function (_name) {
+        var _flaClass = window[_name][_name.replace(/(\w)/, function (v) { return v.toUpperCase() })];
+        if (window[_name] && _flaClass) {
+            return new window[_name][_name.replace(/(\w)/, function (v) { return v.toUpperCase() })];
+        }
+    }
+
+    gm.atouch = function(_mc, _type, _cb) {
+        var _startX = 0,
+            _startY = 0,
+            _endX = 0,
+            _endY = 0,
+            _dict = 80;
+        var isEventMatch = function (_sx, _sy, _ex, _ey) {
+            if (_sx == 0 && _sy == 0) {
+                return false;
+            }
+            if (_type == "tap") {
+                if (Math.abs(_ex) < 10 && Math.abs(_ey) < 10) {
+                    return true;
+                }
+                return false;
+            }
+            if (_type.indexOf("swipe") > -1) {
+                if (Math.abs(_ex) <= _dict && Math.abs(_ey) <= _dict) {
+                    return false;
+                }
+                if (_type == "swipeup") {
+                    return _ey < -_dict && _ey < _ex;
+                }
+                if (_type == "swipedown") {
+                    return _ey > _dict && _ey > _ex
+                }
+                if (_type == "swipeleft") {
+                    return _ex < -_dict && _ex < _ey
+                }
+                if (_type == "swiperight") {
+                    return _ex > _dict && _ex > _ey
+                }
+            }
+        }
+
+        _mc.on(gm.mt.MOUSE_DOWN, function (e) {
+            _startX = e.stageX;
+            _startY = e.stageY;
+        },false);
+
+        _mc.on(gm.mt.MOUSE_UP, function (e) {
+            _endX = e.stageX - _startX;
+            _endY = e.stageY - _startY;
+            isEventMatch(_startX, _startY, _endX, _endY) && _cb(e);
+            _startY = 0;
+            _startX = 0;
+        },false);
+    }
+
+    gm.fla = {
+        getClass : gm.getFlaClass,
+        setTouch : gm.atouch,
+        setButton : function(_movieClip){
+            _movieClip.anchorX = _movieClip.getWH().width/2;
+            _movieClip.anchorY = _movieClip.getWH().height/2;
+    
+            _movieClip.mouseChildren = false;
+            _movieClip.on(gm.mt.MOUSE_DOWN,function(){
+                _movieClip.scaleX = _movieClip.scaleY = 0.95;
+            })
+            _movieClip.on(gm.mt.MOUSE_UP,function(){
+                _movieClip.scaleX = _movieClip.scaleY = 1
+            })
+            _movieClip.on(gm.mt.MOUSE_OUT,function(){
+                _movieClip.scaleX = _movieClip.scaleY = 1
+            })
+        }
     }
 
     gm.isLoadEnd = false;

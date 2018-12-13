@@ -50,7 +50,7 @@
 				}, function (result) {
 					if (result.sceneId == result.sceneTotal) {
 						
-						self.page['cloading'] = gm.getFlaClass('cloading');
+						self.page['cloading'] = gm.fla.getClass('cloading');
 						// 全面屏 竖屏设计
 						self.page['cloading'].y = self.suitHeight;
 
@@ -86,7 +86,7 @@
 							if (result.sceneId == result.sceneTotal) {
 								self.loadProcess(100);
 
-								self.page['cmain'] = gm.getFlaClass('cmain');
+								self.page['cmain'] = gm.fla.getClass('cmain');
 								self.page['cloading'].container.addChild(self.page['cmain']);
 								annie.Tween.to(self.page['cloading'].loadBox,0.3,{
 									alpha: 0,

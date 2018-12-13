@@ -1,7 +1,7 @@
 <?php
 
     // 活动网站地址
-    $websiteUrl = 'https://h5.igumo.cc/';
+    $websiteUrl = 'https://h5.igumo.cc/brand/campaign/';
     // 活动网站标题
     $websiteTitle = '活动网站标题';
 
