@@ -1,4 +1,4 @@
-;(function (global) {
+;(function on_init(global) {
 	/*
 	 * 添加事件管理器
 	 * ems.on/one/off/trigger
@@ -6,7 +6,7 @@
 	var ems = new gm.EM;
 
 	var MyApp = function () {}
-	MyApp.prototype = {
+	var __MyAppPrototype =  {
 		loadStart: function () {
 			var self = this;
 			/*
@@ -19,7 +19,7 @@
 			 * 全面屏 尺寸
 			 * 设计尺寸 800 1280，安全范围 640 1040 居中
 			 */
-			$(window).on('resize', function () {
+			$(window).on('resize', function on_resize() {
 				var _selfBox = $("#app");
 				// 当前屏幕宽高从低至高排序
 				var _selfwh = _.sortBy([_selfBox.width(), _selfBox.height()]);
@@ -44,7 +44,7 @@
 
 			self.stage.autoResize = false;
 			self.stage.autoSteering = false;
-			self.stage.addEventListener(annie.Event.ON_INIT_STAGE, function (e) {
+			self.stage.addEventListener(annie.Event.ON_INIT_STAGE, function on_init_stage(e) {
 				annie.loadScene(['cloading'], function (per) {
 					self.loadProcess(per);
 				}, function (result) {
@@ -120,18 +120,11 @@
 			
 		}
 	};
+	
+	MyApp.prototype = __MyAppPrototype;
 	var myapp = new MyApp;
 
-	window.A2xExtend = function () {
-		var _extend = {};
-		try {
-			if (__extends) {
-				_extend = __extends;
-			}
-		} catch (error) {}
-		return _extend;
-	}();
-
+	window.A2xExtend = __extends || {};
 
 	this.initAPP = function (cb) {
 		cb(myapp);
