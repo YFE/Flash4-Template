@@ -3,6 +3,7 @@
         version: "1.0.2"
     };
 
+
     var eventManager = function() {
         if (!(this instanceof eventManager)) {
             return new eventManager();
@@ -268,7 +269,23 @@
                     cb();
                 });
             } else {
+                if( gm.wxData.isWechat ){
+                    $(document).on('WeixinJSBridgeReady',function(){
+                        WeixinJSBridge.invoke("getNetworkType", {}, function(){
+                            cb();
+                        });
+                    })
+                    return;
+                }
                 cb();
+            }
+        },
+        isWechat : function(){
+            var ua = window.navigator.userAgent.toLowerCase();
+            if(ua.match(/MicroMessenger/i) == 'micromessenger'){
+                return true;
+            }else{
+                return false;
             }
         }
     };
