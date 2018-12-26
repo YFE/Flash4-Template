@@ -8,7 +8,7 @@
 	<meta name="format-detection"content="telephone=no, email=no" />
 	<meta itemprop="name" content="<?=$wxData['title']?>"/>
 	<meta itemprop="image" content="<?=$wxData['imgUrl']?>" />
-	<meta itemprop="description" name="description" content="<?=$wxData['desc']?>" />
+	<meta itemprop="description" name="description" content="<?=$wxData['singleDesc']?>" />
 	<title><?=$websiteTitle?></title>
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,shrink-to-fit=no">
 	<style> .hide { display:none; } </style>
@@ -23,7 +23,7 @@
             $(document).on("touchmove", function(e) {
                 e.preventDefault();
             });
-            $("img,video").on("touchmove", function(e) {
+            $(document).on("touchmove","img", function(e) {
                 e.preventDefault();
                 e.stopPropagation();
             });
@@ -43,7 +43,6 @@
 			title : "<?=$wxData['title']?>",
 			singleDesc : "<?=$wxData['singleDesc']?>"
 		};
-        gm.wxData.setDefault(__defaultWxData);
 	</script>
 </head>
 <body>
@@ -55,6 +54,7 @@
 		app.loadStart();
 		
 		wx.ready(function(){
+			gm.wxData.setDefault(__defaultWxData);
 			wxData.share();
 		});
 	});
