@@ -19,7 +19,11 @@
    	<script src="<?=$cdnUrl?>assets/js/libs/base.js"></script>
    	<script>
         $(function(){
-            FastClick.attach(document.body);
+			FastClick.attach(document.body);
+			document.body.addEventListener('focusout', function (evt) {
+				document.body.scrollTop=0;
+			});
+
             $(document).on("touchmove", function(e) {
                 e.preventDefault();
             });
@@ -50,12 +54,12 @@
 <script src="<?=$cdnUrl?>assets/js/app.js"></script>
 <script>
 	initAPP(function(app){
-		//启动加载
+		
 		app.loadStart();
 		
 		wx.ready(function(){
 			gm.wxData.setDefault(__defaultWxData);
-			wxData.share();
+			gm.wxData.share();
 		});
 	});
 </script>

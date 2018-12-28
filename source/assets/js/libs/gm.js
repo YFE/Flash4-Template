@@ -263,132 +263,89 @@
                 gm.wxData.singleDesc = _defaultWxData.singleDesc || _defaultWxData.desc;
             } catch (e) {}
         },
-        fire : function(cb) {
-            if (typeof WeixinJSBridge == "object") {
-                WeixinJSBridge.invoke('getNetworkType', {}, function(e) {
-                    cb();
-                });
-            } else {
-                if( gm.wxData.isWechat ){
-                    $(document).on('WeixinJSBridgeReady',function(){
-                        WeixinJSBridge.invoke("getNetworkType", {}, function(){
-                            cb();
-                        });
-                    })
-                    return;
+        fire: function (cb) {
+            if ( gm.env.wechat ) {
+                if (typeof WeixinJSBridge == "object") {
+                    WeixinJSBridge.invoke('getNetworkType', {}, cb);
+                } else {
+                    document.addEventListener('WeixinJSBridgeReady', function () {
+                        WeixinJSBridge.invoke("getNetworkType", {}, cb);
+                    },false)
                 }
+            }else {
                 cb();
-            }
-        },
-        isWechat : function(){
-            var ua = window.navigator.userAgent.toLowerCase();
-            if(ua.match(/MicroMessenger/i) == 'micromessenger'){
-                return true;
-            }else{
-                return false;
             }
         }
     };
 
-    gm.transName = function(str,_maxlen,_etra) {
-        // 将名称拆分为数组,注意: 这样会将表情拆分为两项,其值为代理对.
-        // 并且因为,代理对无法被浏览器识别,所以它们的值可能会被转化为 U+feff
-        var strArr = str.split(""),
-            result = "",
-            totalLen = 0,
-            isSub = false;
+    gm.env = function(){
+        var ua = window.navigator.userAgent.toLocaleLowerCase(),
+        version = window.navigator.appVersion;
 
-        for (var idx = 0; idx < strArr.length; idx++) {
-            // 超出长度,退出程序
-            if (_maxlen && totalLen >= _maxlen) {
-                isSub = true;
-                break;
+        return {
+            os : function () {
+                var t = ua,
+                    e = /android/,
+                    n = /iphone|ipod|ipad/;
+                return e.test(t) ? "android" : n.test(t) ? "ios" : "pc"
+            }(),
+            wechat: function () {
+                return /micromessenger/.test(ua);
+            }()
+        }
+    }();
+
+    gm.vld = {
+        isEmpty : function(_txt){
+            return _txt == '';
+        },
+        isPhone : function(_txt){
+            return /^1[345789]\d{9}$/.test(_txt)
+        },
+        transName = function(str,_maxlen,_etra) {
+            // 将名称拆分为数组,注意: 这样会将表情拆分为两项,其值为代理对.
+            // 并且因为,代理对无法被浏览器识别,所以它们的值可能会被转化为 U+feff
+            var strArr = str.split(""),
+                result = "",
+                totalLen = 0,
+                isSub = false;
+
+            for (var idx = 0; idx < strArr.length; idx++) {
+                // 超出长度,退出程序
+                if (_maxlen && totalLen >= _maxlen) {
+                    isSub = true;
+                    break;
+                };
+                var val = strArr[idx];
+                // 英文,增加长度1
+                if (/[a-zA-Z0-9]/.test(val)) {
+                    totalLen = 1 + (+totalLen);
+                    result += val;
+                }
+                // 中文,增加长度2
+                else if (/[\u4e00-\u9fa5]/.test(val) || /[\uff00-\uffff]/.test(val)) {
+                    totalLen = 2 + (+totalLen);
+                    result += val;
+                }
+                // 遇到代理字符,将其转换为 "口", 不增加长度
+                else if (/[\ud800-\udfff]/.test(val)) {
+                    // 代理对长度为2,
+                    result += strArr[idx];
+                    if (/[\ud800-\udfff]/.test(strArr[idx + 1])) {
+                        // 跳过下一个
+                        idx++;
+                    }
+                    // 将代理对替换为 "口"
+                    result += strArr[idx];
+                    totalLen = 2 + (+totalLen);
+                }
             };
-            var val = strArr[idx];
-            // 英文,增加长度1
-            if (/[a-zA-Z0-9]/.test(val)) {
-                totalLen = 1 + (+totalLen);
-                result += val;
+            if (_etra && isSub) {
+                result += _etra;
             }
-            // 中文,增加长度2
-            else if (/[\u4e00-\u9fa5]/.test(val) || /[\uff00-\uffff]/.test(val)) {
-                totalLen = 2 + (+totalLen);
-                result += val;
-            }
-            // 遇到代理字符,将其转换为 "口", 不增加长度
-            else if (/[\ud800-\udfff]/.test(val)) {
-                // 代理对长度为2,
-                result += strArr[idx];
-                if (/[\ud800-\udfff]/.test(strArr[idx + 1])) {
-                    // 跳过下一个
-                    idx++;
-                }
-                // 将代理对替换为 "口"
-                result += strArr[idx];
-                totalLen = 2 + (+totalLen);
-            }
-        };
-        if (_etra && isSub) {
-            result += _etra;
+
+            return [result,totalLen];
         }
-
-        return [result,totalLen];
-    }
-
-    gm.getFlaClass = function (_name) {
-        var _flaClass = window[_name][_name.replace(/(\w)/, function (v) { return v.toUpperCase() })];
-        if (window[_name] && _flaClass) {
-            return new window[_name][_name.replace(/(\w)/, function (v) { return v.toUpperCase() })];
-        }
-    }
-
-    gm.atouch = function(_mc, _type, _cb) {
-        var _startX = 0,
-            _startY = 0,
-            _endX = 0,
-            _endY = 0,
-            _dict = 80;
-        var isEventMatch = function (_sx, _sy, _ex, _ey) {
-            if (_sx == 0 && _sy == 0) {
-                return false;
-            }
-            if (_type == "tap") {
-                if (Math.abs(_ex) < 10 && Math.abs(_ey) < 10) {
-                    return true;
-                }
-                return false;
-            }
-            if (_type.indexOf("swipe") > -1) {
-                if (Math.abs(_ex) <= _dict && Math.abs(_ey) <= _dict) {
-                    return false;
-                }
-                if (_type == "swipeup") {
-                    return _ey < -_dict && _ey < _ex;
-                }
-                if (_type == "swipedown") {
-                    return _ey > _dict && _ey > _ex
-                }
-                if (_type == "swipeleft") {
-                    return _ex < -_dict && _ex < _ey
-                }
-                if (_type == "swiperight") {
-                    return _ex > _dict && _ex > _ey
-                }
-            }
-        }
-
-        _mc.on(gm.mt.MOUSE_DOWN, function (e) {
-            _startX = e.stageX;
-            _startY = e.stageY;
-        },false);
-
-        _mc.on(gm.mt.MOUSE_UP, function (e) {
-            _endX = e.stageX - _startX;
-            _endY = e.stageY - _startY;
-            isEventMatch(_startX, _startY, _endX, _endY) && _cb(e);
-            _startY = 0;
-            _startX = 0;
-        },false);
     }
 
     gm.fla = {
