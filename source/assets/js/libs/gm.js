@@ -302,7 +302,7 @@
         isPhone : function(_txt){
             return /^1[345789]\d{9}$/.test(_txt)
         },
-        transName = function(str,_maxlen,_etra) {
+        transName : function(str,_maxlen,_etra) {
             // 将名称拆分为数组,注意: 这样会将表情拆分为两项,其值为代理对.
             // 并且因为,代理对无法被浏览器识别,所以它们的值可能会被转化为 U+feff
             var strArr = str.split(""),
@@ -349,8 +349,61 @@
     }
 
     gm.fla = {
-        getClass : gm.getFlaClass,
-        setTouch : gm.atouch,
+        getClass : function (_name) {
+            if (window[_name]) {
+                return new window[_name][_name.replace(/(\w)/, function (v) { return v.toUpperCase() })]
+            }else{
+                console.error('no this class');
+            }
+        },
+        setTouch : function(_mc, _type, _cb) {
+            var _startX = 0,
+                _startY = 0,
+                _endX = 0,
+                _endY = 0,
+                _dict = 80;
+            var isEventMatch = function (_sx, _sy, _ex, _ey) {
+                if (_sx == 0 && _sy == 0) {
+                    return false;
+                }
+                if (_type == "tap") {
+                    if (Math.abs(_ex) < 10 && Math.abs(_ey) < 10) {
+                        return true;
+                    }
+                    return false;
+                }
+                if (_type.indexOf("swipe") > -1) {
+                    if (Math.abs(_ex) <= _dict && Math.abs(_ey) <= _dict) {
+                        return false;
+                    }
+                    if (_type == "swipeup") {
+                        return _ey < -_dict && _ey < _ex;
+                    }
+                    if (_type == "swipedown") {
+                        return _ey > _dict && _ey > _ex
+                    }
+                    if (_type == "swipeleft") {
+                        return _ex < -_dict && _ex < _ey
+                    }
+                    if (_type == "swiperight") {
+                        return _ex > _dict && _ex > _ey
+                    }
+                }
+            }
+    
+            _mc.on(gm.mt.MOUSE_DOWN, function (e) {
+                _startX = e.stageX;
+                _startY = e.stageY;
+            });
+    
+            _mc.on(gm.mt.MOUSE_UP, function (e) {
+                _endX = e.stageX - _startX;
+                _endY = e.stageY - _startY;
+                isEventMatch(_startX, _startY, _endX, _endY) && _cb(e);
+                _startY = 0;
+                _startX = 0;
+            });
+        },
         setButton : function(_movieClip){
             _movieClip.anchorX = _movieClip.getWH().width/2;
             _movieClip.anchorY = _movieClip.getWH().height/2;
