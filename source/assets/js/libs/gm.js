@@ -219,7 +219,7 @@
                 success: function() {
                     wxData.callback('timeline');
                     
-                    gm.tracker.page("share/timeline");
+                    gm.tracker.event("share", 'share_timeline');
                     try {
                         MtaH5.clickShare('wechat_moments');
                     } catch (error) {}
@@ -237,8 +237,8 @@
                 dataUrl: '',
                 success: function() {
                     wxData.callback('appmessage');
-
-                    gm.tracker.page("share/appmessage");
+                    
+                    gm.tracker.event("share", 'share_appmessage');
                     try {
                         MtaH5.clickShare('wechat_friend');
                     } catch (error) {}
