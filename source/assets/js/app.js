@@ -98,9 +98,9 @@
 								self.loadComplete();
 								gm.load();
 							}
-						}, __cdnurl + "dist/");
+						}, __cdnurl);
 					}
-				}, __cdnurl + "dist/");
+				}, __cdnurl);
 			});
 		},
 		loadProcess: function (_per) {},

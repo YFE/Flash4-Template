@@ -15,27 +15,6 @@ fis.match('::package', {
     postpackager: fis.plugin('loader')
 });
 
-// JS打包为一个文件
-fis.match('assets/js/libs/*.js', {
-    packTo: 'assets/js/libs/base.js',
-    release: ''
-});
-
-//自动去除console.log等调试信息
-fis.config.set('settings.optimizer.uglify-js', {
-    compress : {
-        // drop_console: true
-    }
-});
-
-// 合并时过滤关键字不压缩。
-fis.match('*.js', {
-    optimizer: fis.plugin('uglify-js', {
-        mangle: {
-            except: 'exports, module, require, define'
-        }
-    })
-});
 
 // packOrder为合并时的排序，数字越大越前
 fis.match('assets/js/libs/jquery.min.js', {
@@ -45,24 +24,43 @@ fis.match('assets/js/libs/gm.js', {
     packOrder: -80
 });
 
-// HTML 图片文件夹下 PNG压缩
-// fis.match('assets/images/*.png', {
-//     optimizer: fis.plugin('png-compressor', {
-//         type: 'pngquant',
-//         quality: [30,50]
-//     })
-// });
+// Libs JS打包为一个文件
+fis.match('assets/js/libs/*.js', {
+    packTo: 'base.js',
+    release: ''
+});
+
+// PLugin 文件夹 JS打包为一个文件
+fis.match('assets/js/plugin/*.js', {
+    packTo: 'plugin.js'
+});
+
+
+fis.match('assets/js/(*.js)', {
+    release: '$1'
+});
+
+
+fis.match('dist/**/(*.{js,swf,json,zip,txt})', {
+    release: '$1'
+});
+
 
 //stylus文件编译
 fis.match('*.styl', {
     parser: 'stylus',
     rExt: '.css',
     isCssLike : false,
-    optimizer: fis.plugin('clean-css')
+    optimizer: fis.plugin('clean-css'),
+    packTo: 'app.css'
 });
-
 fis.match('*.css', {
     isCssLike : false
+});
+
+// 图片文件目录
+fis.match('assets/images/(*.{png,jpg,gif})', {
+    release: '$1'
 });
 
 //输出 test 目录
@@ -70,10 +68,10 @@ fis.match('*.css', {
 //fis3 release dev -d -w 如在后面再加上-w 为实时检测变化
 fis.media('dev').match('**', {
     deploy: [
-        // fis.plugin('replace', {
-        //     from: /\.swf/,
-        //     to: '.js'
-        // }),
+        fis.plugin('replace', {
+            from: /\"src\/\"\+C\[\_\]\+\"\/\"\+/,
+            to: ''
+        }),
         fis.plugin('skip-packed'),
         fis.plugin('local-deliver', {
             to: '../release/test'
@@ -99,10 +97,10 @@ var currVersion = getVersion();
 //fis3 release pro -d
 fis.media('pro').match('**', {
     deploy: [
-        // fis.plugin('replace', {
-        //     from: /\.swf/,
-        //     to: '.js'
-        // }),
+        fis.plugin('replace', {
+            from: /\"src\/\"\+C\[\_\]\+\"\/\"\+/,
+            to: ''
+        }),
         fis.plugin('skip-packed'),
         fis.plugin('local-deliver', {
             to: '../release/' + currVersion
@@ -122,15 +120,23 @@ fis.media('prod').match('**', {
         return true;
     },
     deploy: [
-        // fis.plugin('replace', {
-        //     from: /\.swf/,
-        //     to: '.js'
-        // }),
+        fis.plugin('replace', {
+            from: /\"src\/\"\+C\[\_\]\+\"\/\"\+/,
+            to: ''
+        }),
         fis.plugin('skip-packed'),
         fis.plugin('local-deliver', {
             to: '../release/' + currVersion
         })
     ]
+});
+
+
+//自动去除console.log等调试信息
+fis.config.set('settings.optimizer.uglify-js', {
+    compress : {
+        // drop_console: true
+    }
 });
 
 console.log("本次版本号为： "+ currVersion);

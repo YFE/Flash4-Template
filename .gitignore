@@ -8,7 +8,7 @@ node_modules
 package-lock.json
 
 # Mac #
-*/.DS_Store
+*/**/.DS_Store
 
 # Project #
 release
