@@ -37,6 +37,7 @@ fis.match('assets/js/plugin/*.js', {
 
 
 fis.match('assets/js/(*.js)', {
+    optimizer: fis.plugin('uglify-js'),
     release: '$1'
 });
 
