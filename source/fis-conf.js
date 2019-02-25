@@ -16,6 +16,11 @@ fis.match('::package', {
 });
 
 
+fis.match('assets/libs/gm.js', {
+    optimizer: fis.plugin('uglify-js'),
+});
+
+
 // packOrder为合并时的排序，数字越大越前
 fis.match('assets/js/libs/jquery.min.js', {
     packOrder: -100
@@ -70,7 +75,7 @@ fis.match('assets/images/(*.{png,jpg,gif})', {
 fis.media('dev').match('**', {
     deploy: [
         fis.plugin('replace', {
-            from: /\"src\/\"\+C\[\_\]\+\"\/\"\+/,
+            from: /\"src\/\"\+[a-zA-Z]+\[\_\]\+\"\/\"\+/,
             to: ''
         }),
         fis.plugin('skip-packed'),
@@ -99,7 +104,7 @@ var currVersion = getVersion();
 fis.media('pro').match('**', {
     deploy: [
         fis.plugin('replace', {
-            from: /\"src\/\"\+C\[\_\]\+\"\/\"\+/,
+            from: /\"src\/\"\+[a-zA-Z]+\[\_\]\+\"\/\"\+/,
             to: ''
         }),
         fis.plugin('skip-packed'),
@@ -122,7 +127,7 @@ fis.media('prod').match('**', {
     },
     deploy: [
         fis.plugin('replace', {
-            from: /\"src\/\"\+C\[\_\]\+\"\/\"\+/,
+            from: /\"src\/\"\+[a-zA-Z]+\[\_\]\+\"\/\"\+/,
             to: ''
         }),
         fis.plugin('skip-packed'),

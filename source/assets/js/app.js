@@ -35,7 +35,8 @@
 			}).trigger('resize');
 
 			//单文件模式
-			annie._isReleased="123";
+			annie._isReleased="1";
+			annie.suffixName = '.swf';
 
 			self.stage = new annie.Stage('app', 800, self.initHeight, 30, annie.StageScaleMode.FIXED_HEIGHT, 0);
 
