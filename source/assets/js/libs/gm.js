@@ -300,7 +300,7 @@
             return _txt == '';
         },
         isPhone : function(_txt){
-            return /^1[345789]\d{9}$/.test(_txt)
+            return /^1[3-9][0-9]{9}$/.test(_txt)
         },
         transName : function(str,_maxlen,_etra) {
             // 将名称拆分为数组,注意: 这样会将表情拆分为两项,其值为代理对.
