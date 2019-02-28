@@ -1,4 +1,4 @@
-;(function on_init(global) {
+;(function on_init() {
 	/*
 	 * 添加事件管理器
 	 * ems.on/one/off/trigger
@@ -125,7 +125,7 @@
 	MyApp.prototype = __MyAppPrototype;
 	var myapp = new MyApp;
 
-	this.initAPP = function (cb) {
+	window.initAPP = function (cb) {
 		cb(myapp);
 	}
-}(this));
+}());

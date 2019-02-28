@@ -12,14 +12,15 @@ fis.set('project.ignore', [
 ]);
 
 fis.match('::package', {
+    packager: fis.plugin('map', {
+        useTrack : false
+    }),
     postpackager: fis.plugin('loader')
 });
 
-
-fis.match('assets/libs/gm.js', {
+fis.match('assets/js/libs/gm.js', {
     optimizer: fis.plugin('uglify-js'),
 });
-
 
 // packOrder为合并时的排序，数字越大越前
 fis.match('assets/js/libs/jquery.min.js', {
