@@ -125,8 +125,6 @@
 	MyApp.prototype = __MyAppPrototype;
 	var myapp = new MyApp;
 
-	window.A2xExtend = __extends || {};
-
 	this.initAPP = function (cb) {
 		cb(myapp);
 	}

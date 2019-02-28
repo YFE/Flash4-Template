@@ -88,11 +88,11 @@ gulp.task("prepare",["clean"],function () {
                 }
             }
             //合并压缩js
-            gulp.src(jsList).pipe(browserify({insertGlobals: true, debug: false})).pipe(uglify()).pipe(concat(sceneList[i] + ".swf")).pipe(gulp.dest("../../source/dist/src/" + sceneList[i]));
+            gulp.src(jsList).pipe(browserify({insertGlobals: true, debug: false})).pipe(uglify()).pipe(concat(sceneList[i] + projectInfo.suffixName)).pipe(gulp.dest("../../source/dist/src/" + sceneList[i]));
             //复制其他资源
             gulp.src(otherList).pipe(gulp.dest("../../source/dist/resource/" + sceneList[i]));
             //重写res.json文件
-            sceneInfo.unshift({type: "javascript", src: "src/" + sceneList[i] + "/" + sceneList[i] + ".swf"});
+            sceneInfo.unshift({type: "javascript", src: "src/" + sceneList[i] + "/" + sceneList[i] + projectInfo.suffixName});
             var stream = source(sceneList[i] + ".res.json");
             // 将文件的内容写入 stream
             stream.write( JSON.stringify(sceneInfo, null, ""));
@@ -155,9 +155,9 @@ gulp.task("packToOne",function () {
                     }
                 }
             }
-            var content = "annie.res." + item + "=" + JSON.stringify(resObj, null, "").replace(/"([\w\d_\$]+)"\:/g, "$1:") + ";" + fs.readFileSync("../../source/dist/src/" + sceneList[i] + "/" + sceneList[i] + ".swf");
+            var content = "annie.res." + item + "=" + JSON.stringify(resObj, null, "").replace(/"([\w\d_\$]+)"\:/g, "$1:") + ";" + fs.readFileSync("../../source/dist/src/" + sceneList[i] + "/" + sceneList[i] + projectInfo.suffixName);
             //正则替换里面所有的
-            fs.writeFile("../../source/dist/src/" + sceneList[i] + "/" + sceneList[i] + ".swf", content, "utf8", function (err) {});
+            fs.writeFile("../../source/dist/src/" + sceneList[i] + "/" + sceneList[i] + projectInfo.suffixName, content, "utf8", function (err) {});
             //删除不需要的资源
             del("../../source/dist/resource/" + item,{
                 force : true
