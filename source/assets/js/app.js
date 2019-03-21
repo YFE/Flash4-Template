@@ -43,8 +43,9 @@
 			// 横屏设计
 			// self.stage = new annie.Stage('app', self.initHeight, 800, 30, annie.StageScaleMode.FIXED_WIDTH, 0);
 
-			self.stage.autoResize = false;
 			self.stage.autoSteering = false;
+			self.stage.autoResize = false;
+
 			self.stage.addEventListener(annie.Event.ON_INIT_STAGE, function on_init_stage(e) {
 				annie.loadScene(['cloading'], function (per) {
 					self.loadProcess(per);
@@ -58,7 +59,7 @@
 						// 全面屏 横屏设计
 						// self.page['cloading'].x = self.suitHeight;
 
-						ems.on('resize', function () {
+						ems.on('resize', _.throttle(function ems_resize(){
 							// 竖屏设计
 							self.stage.desHeight = self.initHeight;
 							self.page['cloading'].y = self.suitHeight;
@@ -67,8 +68,13 @@
 							// self.stage.desWidth = self.initHeight;
 							// self.page['cloading'].x = self.suitHeight;
 
-							self.stage.resize();
-						})
+							self.stage.autoResize = true;
+							_.delay(function(){
+								self.stage.autoResize = false;
+							},150)
+						}, 100, {
+							trailing : false
+						}));
 
 						//font handlee
 						self.page['cloading'].loadBox.loadText.loadNum.font = 'handlee';
@@ -106,18 +112,12 @@
 		},
 		loadProcess: function (_per) {},
 		loadComplete: function () {
-			this.listener();
 			this.init();
 		},
 		page: {},
 		init: function () {
 			var self = this;
 
-			
-		},
-		listener: function () {
-			var self = this;
-			
 			
 		}
 	};
