@@ -5,7 +5,7 @@
   "version": "1.0.0",
   "description": "通过Flash2x工具转换的项目.",
   "main": "index.html",
-  "suffixName":".swf",
+  "suffixName": ".swf",
   "scripts": {
     "test": "echo \"Weclome to Annie2x!\" && exit 1"
   },
@@ -14,14 +14,11 @@
   "devDependencies": {
     "@babel/core": "^7.2.2",
     "@babel/preset-env": "^7.2.3",
-    "base64-min": "^1.2.0",
     "del": "^2.2.1",
     "fs": "0.0.2",
     "gulp": "^3.9.1",
     "gulp-babel": "^8.0.0",
-    "gulp-browserify": "^0.5.1",
     "gulp-concat": "^2.6.0",
-    "gulp-htmlmin": "^5.0.1",
     "gulp-pngquant": "^1.0.10",
     "gulp-rename": "^1.2.2",
     "gulp-replace": "^0.5.4",

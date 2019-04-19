@@ -12,6 +12,26 @@ declare namespace annieUI {
      */
     class ScrollPage extends Sprite {
         /**
+         * annieUI.ScrollPage组件滑动到开始位置事件
+         * @event annie.Event.ON_SCROLL_TO_HEAD
+         * @since 1.1.0
+         */
+        /**
+         * annieUI.ScrollPage组件停止滑动事件
+         * @event annie.Event.ON_SCROLL_STOP
+         * @since 1.1.0
+         */
+        /**
+         * annieUI.ScrollPage组件开始滑动事件
+         * @event annie.Event.ON_SCROLL_START
+         * @since 1.1.0
+         */
+        /**
+         * annieUI.ScrollPage组件滑动到结束位置事件
+         * @event annie.Event.ON_SCROLL_TO_END
+         * @since 1.1.0
+         */
+        /**
          * 横向还是纵向 默认为纵向
          * @property isVertical
          * @type {boolean}
@@ -121,6 +141,13 @@ declare namespace annieUI {
         private isMouseDownState;
         private autoScroll;
         /**
+         * 是否有回弹效果，默认是true
+         * @property isSpringBack
+         * @type {boolean}
+         * @since 2.0.1
+         */
+        isSpringBack: boolean;
+        /**
          * 构造函数
          * @method  ScrollPage
          * @param {number} vW 可视区域宽
@@ -128,7 +155,7 @@ declare namespace annieUI {
          * @param {number} maxDistance 最大滚动的长度
          * @param {boolean} isVertical 是纵向还是横向，也就是说是滚x还是滚y,默认值为沿y方向滚动
          * @example
-         *      s.sPage=new annie.ScrollPage(640,s.stage.viewRect.height,4943);
+         *      s.sPage=new annieUI.ScrollPage(640,s.stage.viewRect.height,4943);
          *          s.addChild(s.sPage);
          *          s.sPage.view.addChild(new home.Content());
          *          s.sPage.y=s.stage.viewRect.y;
@@ -157,6 +184,13 @@ declare namespace annieUI {
          */
         scrollTo(dis: number, time?: number): void;
         destroy(): void;
+        /**
+         * 获取当前滑动的位置
+         * @property currentPos
+         * @type {number}
+         * @since 2.0.1
+         */
+        currentPos: number;
     }
 }
 /**
@@ -175,20 +209,25 @@ declare namespace annieUI {
      */
     class FacePhoto extends Sprite {
         /**
+         * 图片加载完成事件
+         * @event COMPLETE
+         * @since 1.0.0
+         */
+        /**
          * 构造函数
          * @method  FacePhoto
          * @since 1.0.0
          * @public
          * @example
-         *      var circleface = new annie.FacePhoto(),
-         *          rectFace=new annie.FacePhoto();
+         *      var circleface = new annieUI.FacePhoto(),
+         *          rectFace=new annieUI.FacePhoto();
          *          //圆形头像
-         *          circleface.init('http://test.annie2x.com/biglong/logo.jpg', 100, 0);
+         *          circleface.init('http://test.annie2x.com/biglong/logo.jpg', 100,100, 0);
          *          circleface.x = 260;
          *          circleface.y = 100;
          *          s.addChild(circleface);
          *          //方形头像
-         *          rectFace.init('http://test.annie2x.com/biglong/logo.jpg', 200, 1);
+         *          rectFace.init('http://test.annie2x.com/biglong/logo.jpg', 200,200, 1);
          *          rectFace.x = 260;
          *          rectFace.y = 400;
          *          s.addChild(rectFace);
@@ -197,16 +236,19 @@ declare namespace annieUI {
         private photo;
         private bitmap;
         private maskType;
+        private radioW;
+        private radioH;
         private radio;
         private maskObj;
         /**
          * 被始化头像，可反复调用设置不同的遮罩类型或者不同的头像地址
          * @method init
          * @param {string} src 头像的地址
-         * @param {number} radio 指定头像的长宽或者直径
-         * @param {number} maskType 遮罩类型，是圆形遮罩还是方形遮罩 0 圆形 1方形 默认是0
+         * @param {number} w 指定头像的宽
+         * @param {number} h 指定头像的高
+         * @param {number} maskType 遮罩类型，是圆形遮罩还是方形遮罩 0 圆形或椭圆形 1 正方形或者长方形 默认是圆形
          */
-        init(src: string, radio?: number, maskType?: number): void;
+        init(src: string, w: number, h: number, maskType?: number): void;
         destroy(): void;
     }
 }
@@ -223,6 +265,16 @@ declare namespace annieUI {
      * @since 1.0.0
      */
     class SlidePage extends Sprite {
+        /**
+         * annieUI.Slide 组件开始滑动事件
+         * @event annie.Event.ON_SLIDE_START
+         * @since 1.1.0
+         */
+        /**
+         * annieUI.Slide 组件结束滑动事件
+         * @event annie.Event.ON_SLIDE_END
+         * @since 1.1.0
+         */
         /**
          * 页面个数
          * @property listLen
@@ -279,8 +331,32 @@ declare namespace annieUI {
          * @default 0
          */
         currentPageIndex: number;
+        /**
+         * 上下的回弹率 默认0.3
+         * @property reBound
+         * @type {number}
+         * @public
+         * @since 1.0.3
+         * @default 0.3
+         */
         reBound: number;
+        /**
+         * 页面是否滑动跟随，默认false
+         * @property isPageFollowToMove
+         * @type {boolean}
+         * @public
+         * @since 1.0.3
+         * @default false
+         */
         isPageFollowToMove: boolean;
+        /**
+         * 页面的跟随缓动系数率，默认0.7
+         * @property reBound
+         * @type {number}
+         * @public
+         * @since 1.0.3
+         * @default 0.7
+         */
         follow: number;
         /**
          * 页面是否移动
@@ -306,12 +382,18 @@ declare namespace annieUI {
          */
         protected viewHeight: number;
         /**
-         * 页面列表
+         * 页面对象列表
          * @property pageList
          * @type {Array}
          * @public
          */
         pageList: Array<any>;
+        /**
+         * 页面对象的类列表
+         * @property pageList
+         * @type {Array}
+         * @public
+         */
         pageClassList: Array<any>;
         private lastX;
         private lastY;
@@ -385,14 +467,24 @@ declare namespace annieUI {
  */
 declare namespace annieUI {
     import Sprite = annie.Sprite;
-    /**
-     * 电子杂志组件类
-     * @class annieUI.FlipBook
-     * @public
-     * @extends annie.Sprite
-     * @since 1.0.3
-     */
     class FlipBook extends Sprite {
+        /**
+         * annieUI.FlipBook组件翻页开始事件
+         * @event annie.Event.ON_FLIP_START
+         * @since 1.1.0
+         */
+        /**
+         * annieUI.FlipBook组件翻页结束事件
+         * @event annie.Event.ON_FLIP_STOP
+         * @since 1.1.0
+         */
+        /**
+         * 电子杂志组件类
+         * @class annieUI.FlipBook
+         * @public
+         * @extends annie.Sprite
+         * @since 1.0.3
+         */
         /**
          * 总页数
          * @property totalPage
@@ -463,6 +555,9 @@ declare namespace annieUI {
          * @since 1.0.3
          */
         constructor(width: number, height: number, pageCount: any, getPageCallBack: Function);
+        private md;
+        private mu;
+        private mm;
         private drawPage(num, movePoint);
         private checkLimit(point, limitPoint, limitGap);
         private getPage(index);
@@ -726,6 +821,12 @@ declare namespace annieUI {
      * @since 1.1.1
      */
     class ScratchCard extends DrawingBoard {
+        /**
+         * annie.ScratchCard 刮刮卡事件，刮了多少，一个百分比
+         * @event annie.Event.ON_DRAW_PERCENT
+         * @since 1.0.9
+         *
+         */
         /**
          * 构造函数
          * 请监听 "onDrawTime"事件来判断刮完多少百分比了。
