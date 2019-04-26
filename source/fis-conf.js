@@ -43,6 +43,8 @@ fis.match('assets/js/plugin/*.js', {
 
 
 fis.match('assets/js/(*.js)', {
+    // 添加es6 转换支持
+    // parser: fis.plugin('babel-6.x'), 
     optimizer: fis.plugin('uglify-js'),
     release: '$1'
 });
@@ -76,7 +78,7 @@ fis.match('assets/images/(*.{png,jpg,gif})', {
 fis.media('dev').match('**', {
     deploy: [
         fis.plugin('replace', {
-            from: /\"src\/\"\+[a-zA-Z]+\[\_\]\+\"\/\"\+/,
+            from: /(\"src\/\"\+[a-zA-Z]+\[\_\]\+\"\/\"\+)|(\"use strict\")/g,
             to: ''
         }),
         fis.plugin('skip-packed'),
@@ -100,20 +102,6 @@ function getVersion(){
 }
 
 var currVersion = getVersion();
-//输出 版本号 目录
-//fis3 release pro -d
-fis.media('pro').match('**', {
-    deploy: [
-        fis.plugin('replace', {
-            from: /\"src\/\"\+[a-zA-Z]+\[\_\]\+\"\/\"\+/,
-            to: ''
-        }),
-        fis.plugin('skip-packed'),
-        fis.plugin('local-deliver', {
-            to: '../release/' + currVersion
-        })
-    ]
-});
 
 //输出 版本号 目录 并删除其他版本目录
 //fis3 release prod -d
@@ -128,7 +116,7 @@ fis.media('prod').match('**', {
     },
     deploy: [
         fis.plugin('replace', {
-            from: /\"src\/\"\+[a-zA-Z]+\[\_\]\+\"\/\"\+/,
+            from: /(\"src\/\"\+[a-zA-Z]+\[\_\]\+\"\/\"\+)|(\"use strict\")/g,
             to: ''
         }),
         fis.plugin('skip-packed'),
