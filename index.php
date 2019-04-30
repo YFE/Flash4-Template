@@ -2,7 +2,7 @@
     include "app/config.php";
 ?>
 <!DOCTYPE html>
-<html class="landscape">
+<html>
 <head>
 	<meta charset="UTF-8">
 	<meta name="format-detection"content="telephone=no, email=no" />
@@ -21,16 +21,6 @@
    	<script>
         $(function(){
 			FastClick.attach(document.body);
-            $(document).on("touchmove", function(e) {
-                e.preventDefault();
-            });
-            $("#app").on("touchmove","img video", function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-            });
-            $(".scroller").on("touchmove", function(e) {
-                e.stopPropagation();
-			});
 		});
 	</script>
 	<script>
