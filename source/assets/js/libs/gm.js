@@ -214,7 +214,7 @@
             if (!gm.wxData.singleDesc) gm.wxData.singleDesc = gm.wxData.desc;
             wx.onMenuShareTimeline({
                 title: wxData.desc,
-                link: wxData.link + (wxData.link.indexOf("?") > -1 ? "&" : "?") + "CKTAG=mtah5_share.wechat_moments",
+                link: wxData.link + (wxData.link.indexOf("?") > -1 ? "&" : "?") + "hmsr=mtah5_share.wechat_moments",
                 imgUrl: wxData.imgUrl,
                 success: function() {
                     wxData.callback('timeline');
@@ -231,7 +231,7 @@
             wx.onMenuShareAppMessage({
                 title: wxData.title,
                 desc: wxData.singleDesc,
-                link: wxData.link + (wxData.link.indexOf("?") > -1 ? "&" : "?") + "CKTAG=mtah5_share.wechat_friend",
+                link: wxData.link + (wxData.link.indexOf("?") > -1 ? "&" : "?") + "hmsr=mtah5_share.wechat_friend",
                 imgUrl: wxData.imgUrl,
                 type: '',
                 dataUrl: '',
