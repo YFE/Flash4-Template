@@ -18,11 +18,6 @@
    	<script src="https://res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
    	<script src="<?=$cdnUrl?>base.js"></script>
    	<!-- <script src="<?=$cdnUrl?>plugin.js"></script> -->
-   	<script>
-        $(function(){
-			FastClick.attach(document.body);
-		});
-	</script>
 	<script>
 		var	__cdnurl = "<?=$cdnUrl?>";
         var __mediaurl = "<?=$mediaUrl?>";
