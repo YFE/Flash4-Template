@@ -62,6 +62,23 @@ fis.match('app.styl', {
     optimizer: fis.plugin('clean-css'),
     packTo: 'app.css'
 });
+
+
+//px 2 rem 转换
+fis.match('page.styl', {
+    parser: 'stylus',
+    rExt: '.css',
+    postprocessor: fis.plugin('px2rem',    {
+        baseDpr: 2,             // base device pixel ratio (default: 2)
+        remVersion: true,       // whether to generate rem version (default: true)
+        remUnit: 100,            // rem unit value (default: 75)
+        remPrecision: 6         // rem precision (default: 6)
+    }),
+    isCssLike : false,
+    optimizer: fis.plugin('clean-css'),
+    packTo: 'page.css'
+});
+
 fis.match('*.css', {
     isCssLike : false
 });
