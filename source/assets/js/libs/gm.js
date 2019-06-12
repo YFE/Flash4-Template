@@ -1,6 +1,6 @@
 ;(function(global, undefined) {
     var gm = global.gm = {
-        version: "1.1.1"
+        version: "1.2.0"
     };
 
 
@@ -214,15 +214,12 @@
             if (!gm.wxData.singleDesc) gm.wxData.singleDesc = gm.wxData.desc;
             wx.onMenuShareTimeline({
                 title: wxData.desc,
-                link: wxData.link + (wxData.link.indexOf("?") > -1 ? "&" : "?") + "hmsr=share.wechat&hmpl=moments",
+                link: wxData.link + (wxData.link.indexOf("?") > -1 ? "&" : "?") + "hmsr=share.wechat&hmpl=share.wechat.moments",
                 imgUrl: wxData.imgUrl,
                 success: function() {
                     wxData.callback('timeline');
                     
                     gm.tracker.event("share", 'share_timeline');
-                    try {
-                        MtaH5.clickShare('wechat_moments');
-                    } catch (error) {}
                 },
                 cancel: function() {
                     gm.tracker.event("share", 'timeline/cancel');
@@ -231,7 +228,7 @@
             wx.onMenuShareAppMessage({
                 title: wxData.title,
                 desc: wxData.singleDesc,
-                link: wxData.link + (wxData.link.indexOf("?") > -1 ? "&" : "?") + "hmsr=share.wechat&hmpl=friend",
+                link: wxData.link + (wxData.link.indexOf("?") > -1 ? "&" : "?") + "hmsr=share.wechat&hmpl=share.wechat.friend",
                 imgUrl: wxData.imgUrl,
                 type: '',
                 dataUrl: '',
@@ -239,9 +236,6 @@
                     wxData.callback('appmessage');
                     
                     gm.tracker.event("share", 'share_appmessage');
-                    try {
-                        MtaH5.clickShare('wechat_friend');
-                    } catch (error) {}
                 },
                 cancel: function() {
                     gm.tracker.event("share", 'appmessage/cancel');
@@ -373,7 +367,7 @@
                 console.error('no this class');
             }
         },
-        setTouch : function(_mc, _type, _cb) {
+        setTouch : function(_movieClip, _type, _cb) {
             var _startX = 0,
                 _startY = 0,
                 _endX = 0,
@@ -408,18 +402,20 @@
                 }
             }
     
-            _mc.on(gm.mt.MOUSE_DOWN, function (e) {
+            _movieClip.on(gm.mt.MOUSE_DOWN, function (e) {
                 _startX = e.stageX;
                 _startY = e.stageY;
             });
     
-            _mc.on(gm.mt.MOUSE_UP, function (e) {
+            _movieClip.on(gm.mt.MOUSE_UP, function (e) {
                 _endX = e.stageX - _startX;
                 _endY = e.stageY - _startY;
                 isEventMatch(_startX, _startY, _endX, _endY) && _cb(e);
                 _startY = 0;
                 _startX = 0;
             });
+
+            return _movieClip
         },
         setButton : function(_movieClip){
             _movieClip.anchorX = _movieClip.getWH().width/2;
@@ -435,6 +431,8 @@
             _movieClip.on(gm.mt.MOUSE_OUT,function(){
                 _movieClip.scaleX = _movieClip.scaleY = 1
             })
+
+            return _movieClip;
         }
     }
 
