@@ -297,6 +297,15 @@
         }
     }
 
+    gm.calc = {
+        worker : function(f)  {
+            var blob = new Blob(['(' + f.toString() +')()']);
+            var url = window.URL.createObjectURL(blob);
+            var worker = new Worker(url);
+            return worker;
+        }
+    }
+
     gm.vld = {
         isEmpty : function(_txt){
             return _txt == '';
