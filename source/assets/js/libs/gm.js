@@ -1,6 +1,6 @@
 ;(function(global, undefined) {
     var gm = global.gm = {
-        version: "1.0.2"
+        version: "1.1.1"
     };
 
 
@@ -214,7 +214,7 @@
             if (!gm.wxData.singleDesc) gm.wxData.singleDesc = gm.wxData.desc;
             wx.onMenuShareTimeline({
                 title: wxData.desc,
-                link: wxData.link + (wxData.link.indexOf("?") > -1 ? "&" : "?") + "hmsr=mtah5_share.wechat_moments",
+                link: wxData.link + (wxData.link.indexOf("?") > -1 ? "&" : "?") + "hmsr=share.wechat&hmpl=moments",
                 imgUrl: wxData.imgUrl,
                 success: function() {
                     wxData.callback('timeline');
@@ -231,7 +231,7 @@
             wx.onMenuShareAppMessage({
                 title: wxData.title,
                 desc: wxData.singleDesc,
-                link: wxData.link + (wxData.link.indexOf("?") > -1 ? "&" : "?") + "hmsr=mtah5_share.wechat_friend",
+                link: wxData.link + (wxData.link.indexOf("?") > -1 ? "&" : "?") + "hmsr=share.wechat&hmpl=friend",
                 imgUrl: wxData.imgUrl,
                 type: '',
                 dataUrl: '',
@@ -295,12 +295,29 @@
         }
     }();
 
+    gm.uri = {
+        query : function(t) {
+            var e = new RegExp("(^|&)" + t + "=([^&]*)(&|$)", "i"),
+                n = window.location.search.substr(1).match(e);
+            return null != n ? decodeURIComponent(n[2]) : null
+        }
+    }
+
     gm.vld = {
         isEmpty : function(_txt){
             return _txt == '';
         },
         isPhone : function(_txt){
             return /^1[3-9][0-9]{9}$/.test(_txt)
+        },
+        isEmail : function(_txt){
+            return /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/.test(_txt);
+        },
+        isHText : function(_txt){
+            return /^[\u4e00-\u9fa5]+$/.test(_txt);
+        },
+        isNotSymNum : function(_txt){
+            return /[^\a-zA-Z\s\u4E00-\u9FA5]/g.test(_txt);
         },
         transName : function(str,_maxlen,_etra) {
             // 将名称拆分为数组,注意: 这样会将表情拆分为两项,其值为代理对.

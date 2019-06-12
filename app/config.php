@@ -1,7 +1,7 @@
 <?php
 
     // 活动网站地址
-    $websiteUrl = 'https://h5.igumo.cc/brand/campaign/';
+    $websiteUrl = 'https://o.gumo.pro/brand/campaign/';
     // 活动网站标题
     $websiteTitle = '活动网站标题';
 
@@ -12,8 +12,8 @@
     
     // 如果是线上环境
     if( getenv(ENV) == 'production' ){
-        $cdnUrl = "https://as.h5.igumo.cc/brand/campaign/release/v1234567890/";
-        $mediaUrl = "https://as.h5.igumo.cc/brand/campaign/media/";
+        $cdnUrl = "https://ts.o.gumo.pro/brand/campaign/release/v1234567890/";
+        $mediaUrl = "https://ts.o.gumo.pro/brand/campaign/media/";
     }
 
     // 微信默认分享设置

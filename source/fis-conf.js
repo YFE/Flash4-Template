@@ -37,9 +37,9 @@ fis.match('assets/js/libs/*.js', {
 });
 
 // PLugin 文件夹 JS打包为一个文件
-fis.match('assets/js/plugin/*.js', {
-    packTo: 'plugin.js'
-});
+// fis.match('assets/js/plugin/*.js', {
+//     packTo: 'plugin.js'
+// });
 
 
 fis.match('assets/js/(*.js)', {

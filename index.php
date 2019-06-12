@@ -13,11 +13,10 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,shrink-to-fit=no">
 	<style> .hide { display:none; } </style>
 	<link rel="stylesheet" href="<?=$cdnUrl?>app.css">
-	<!-- <link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/1.1.3/weui.min.css"> -->
+	<!-- <link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/2.0.0/weui.min.css"> -->
    	<!-- <script src="https://res.wx.qq.com/open/libs/weuijs/1.1.4/weui.min.js"></script> -->
    	<script src="https://res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
    	<script src="<?=$cdnUrl?>base.js"></script>
-   	<!-- <script src="<?=$cdnUrl?>plugin.js"></script> -->
 	<script>
 		var	__cdnurl = "<?=$cdnUrl?>";
         var __mediaurl = "<?=$mediaUrl?>";
