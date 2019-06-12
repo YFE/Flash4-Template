@@ -1,6 +1,5 @@
 //以下目录及文件不进入编译范围
 fis.set('project.ignore', [
-    'flash/**',
     'assets/css/reset.styl',
     'assets/css/weui.styl',
     'assets/css/font.styl',
@@ -56,7 +55,7 @@ fis.match('dist/**/(*.{js,swf,json,zip,txt})', {
 
 
 //stylus文件编译
-fis.match('*.styl', {
+fis.match('app.styl', {
     parser: 'stylus',
     rExt: '.css',
     isCssLike : false,
