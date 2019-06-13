@@ -2,17 +2,15 @@
 动画项目开发模板 for annie4 新版本
 
 ## 最近更新
+### 2019-6-13
+* 修改lodash.js的throttle，改trailing值默认为false，使得调用时可直接使用 _.throttle(fn,500); 来使用。
+
 ### 2019-04-26
 * 更新 fastclick，解决输入框弹不起问题
 * fis3 添加es6 转换支持
 
 ### 2019-04-19
 * 适配生成器至4.2.0版本、更新annie库至3.0.0。
-
-### 2019-02-25
-* 更新 annie 库文件版。
-* 添加逻辑文件压缩设置
-* 现在首页文件中默认会添加竖屏提示
 
 ## 使用步骤
 
@@ -45,14 +43,16 @@ npm install -g fis-xxx-xxx
     - /campaign/ `flash输出目录`
 - /source/ `源素材文件`
     - /assets/ `静态资源`
-        - /css/  `以下文件在输出时会合并压缩为 style.css`
-            - layout.styl `如需另写HTML，在此写相应CSS`
-            - reset.styl/weui.styl `引用样式`
-            - style.styl css `入口及输出文件`
+        - /css/  `以下文件在输出时会合并压缩为 app.css`
+            - font.styl `字体 CSS`
+            - reset.styl `重置样式`
+            - app.styl `动画页面样式`
+            - page.styl `非动画页面开发使用样式，带px2rem转换`
         - /images/
             - share.jpg `分享小图`
         - /js/
             - libs/\*.js `各种库文件 在输出时会合并为base.js`
+            - plugin\*.js `其他插件，引用时需自行引入`
             - app.js `主程序文件`
     - /dist/   `flash输出后目标目录`
     - fis-conf.js `fis3配置文件`
@@ -61,10 +61,10 @@ npm install -g fis-xxx-xxx
 ## 已引进可以直接使用的库
 * jQuery 3.3.1
 
-* jweixin 1.3.2 
+* jweixin 1.4.0 
 > 微信jssdk，支持小程序内嵌H5接口
 
-* weui.css 1.1.3
+* weui.css 2.0.0
 > https://github.com/weui/weui
 
 * weui.js 1.1.4
