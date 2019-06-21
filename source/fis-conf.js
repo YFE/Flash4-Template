@@ -43,13 +43,13 @@ fis.match('assets/js/libs/*.js', {
 
 fis.match('assets/js/(*.js)', {
     // 添加es6 转换支持
-    // parser: fis.plugin('babel-6.x'), 
+    parser: fis.plugin('babel-6.x'), 
     optimizer: fis.plugin('uglify-js'),
     release: '$1'
 });
 
 
-fis.match('dist/**/(*.{js,swf,json,zip,txt})', {
+fis.match('dist/**/(*.{js,swf,json,zip,txt,mp4})', {
     release: '$1'
 });
 
@@ -107,7 +107,7 @@ fis.media('dev').match('**', {
 // 获取日期版本号
 function getVersion(){
     var _now = new Date();
-    return "v" + checkTime(_now.getDate()) + checkTime(_now.getHours()) + checkTime(_now.getMinutes()) + checkTime(_now.getSeconds());
+    return "" + checkTime(_now.getDate()) + checkTime(_now.getHours()) + checkTime(_now.getMinutes()) + checkTime(_now.getSeconds());
 
     function checkTime(i) {
         if (i < 10) {
@@ -119,15 +119,20 @@ function getVersion(){
 
 var currVersion = getVersion();
 
-//输出 版本号 目录 并删除其他版本目录
-//fis3 release prod -d
-fis.media('prod').match('**', {
+// 需要替换版本号的文件位置
+var versionFilePath = '../app/config.php';
+
+fis.media('pro').match('**', {
     prepackager : function (content, file, settings) {
-        var exec = require('child_process').exec,child;
-        child = exec('rm -rf ../release/*',function(err,out) {
-            console.log(out);
-            err && console.log(err);
-        });
+        var fs = require('fs');
+        fs.readFile(versionFilePath,'utf8',function(err,files){
+            //console.log(files)
+            var result = files.replace(/\?v=(\d+)('|")/g,"?v="+currVersion+"$2");
+            fs.writeFile(versionFilePath, result, 'utf8', function (err) {
+                if (err) return console.log(err);
+            });
+    
+        })
         return true;
     },
     deploy: [
@@ -137,7 +142,41 @@ fis.media('prod').match('**', {
         }),
         fis.plugin('skip-packed'),
         fis.plugin('local-deliver', {
-            to: '../release/' + currVersion
+            to: '../release/prod/'
+        })
+    ]
+});
+
+//输出 版本号 目录 并删除其他版本目录
+//fis3 release prod -d
+fis.media('prod').match('**', {
+    prepackager : function (content, file, settings) {
+        var exec = require('child_process').exec,child;
+        child = exec('rm -rf ../release/*',function(err,out) {
+            console.log(out);
+            err && console.log(err);
+        });
+        var fs = require('fs');
+        fs.readFile(versionFilePath,'utf8',function(err,files){
+            var result = files.replace(/\/release\/v(\d+)\//g,"/release/v"+currVersion+"/");
+
+            result = result.replace(/\?v=(\d+)('|")/g,"?v="+currVersion+"$2");
+    
+            fs.writeFile(versionFilePath, result, 'utf8', function (err) {
+                if (err) return console.log(err);
+            });
+    
+        })
+        return true;
+    },
+    deploy: [
+        fis.plugin('replace', {
+            from: /(\"src\/\"\+[a-zA-Z]+\[\_\]\+\"\/\"\+)|(\"use strict\")/g,
+            to: ''
+        }),
+        fis.plugin('skip-packed'),
+        fis.plugin('local-deliver', {
+            to: '../release/' + "v" + currVersion
         })
     ]
 });

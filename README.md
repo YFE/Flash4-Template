@@ -2,15 +2,16 @@
 动画项目开发模板 for annie4 新版本
 
 ## 最近更新
+### 2019-05-21
+* 添加后缀 version参数
+* 增加 fis3 release pro -d 固定版本文件夹方式
+
 ### 2019-6-13
 * 修改lodash.js的throttle，改trailing值默认为false，使得调用时可直接使用 _.throttle(fn,500); 来使用。
 
 ### 2019-04-26
 * 更新 fastclick，解决输入框弹不起问题
 * fis3 添加es6 转换支持
-
-### 2019-04-19
-* 适配生成器至4.2.0版本、更新annie库至3.0.0。
 
 ## 使用步骤
 

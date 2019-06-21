@@ -16,10 +16,12 @@
         $mediaUrl = "https://ts.o.gumo.pro/brand/campaign/media/";
     }
 
+    $version = '?v=123';
+
     // 微信默认分享设置
     $wxData = [
         'link' => $websiteUrl,
-        'imgUrl' => $cdnUrl."share.jpg",
+        'imgUrl' => $cdnUrl."share.jpg".$version,
         'desc' => '分享到朋友圈的文案',
         'title' => '分享到朋友的标题',
         'singleDesc' => '分享到朋友的描述'

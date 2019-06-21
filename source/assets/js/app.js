@@ -4,6 +4,7 @@
 	 * ems.on/one/off/trigger
 	 */
 	var ems = new gm.EM;
+	
 
 	var MyApp = function () {}
 	var __MyAppPrototype =  {
@@ -35,7 +36,7 @@
 			}).trigger('resize');
 
 			//单文件模式
-			annie._isReleased="1";
+			annie._isReleased= __version.replace('?v=','');
 			annie.suffixName = '.swf';
 
 			self.stage = new annie.Stage('app', 800, self.initHeight, 30, annie.StageScaleMode.FIXED_HEIGHT, 0);
@@ -52,21 +53,21 @@
 				}, function (result) {
 					if (result.sceneId == result.sceneTotal) {
 						
-						self.page['cloading'] = gm.fla.getClass('cloading');
+						var ploading = self.page['cloading'] = gm.fla.getClass('cloading');
 						// 全面屏 竖屏设计
-						self.page['cloading'].y = self.suitHeight;
+						ploading.y = self.suitHeight;
 
 						// 全面屏 横屏设计
-						// self.page['cloading'].x = self.suitHeight;
+						// ploading.x = self.suitHeight;
 
 						ems.on('resize', _.throttle(function ems_resize(){
 							// 竖屏设计
 							self.stage.desHeight = self.initHeight;
-							self.page['cloading'].y = self.suitHeight;
+							ploading.y = self.suitHeight;
 
 							// 横屏设计
 							// self.stage.desWidth = self.initHeight;
-							// self.page['cloading'].x = self.suitHeight;
+							// ploading.x = self.suitHeight;
 
 							self.stage.autoResize = true;
 							_.delay(function(){
@@ -77,14 +78,14 @@
 						}));
 
 						//font handlee
-						self.page['cloading'].loadBox.loadText.loadNum.font = 'handlee';
+						ploading.loadBox.loadText.loadNum.font = 'handlee';
 
-						self.page['cloading'].loadBox.gotoAndPlay(2);
+						ploading.loadBox.gotoAndPlay(2);
 						self.loadProcess = function (_per) {
-							self.page['cloading'].loadBox.loadText.loadNum.text = _per + "%";
+							ploading.loadBox.loadText.loadNum.text = _per + "%";
 						}
 						self.loadProcess(0);
-						self.stage.addChild(self.page['cloading']);
+						self.stage.addChild(ploading);
 
 						// 加载其他
 						annie.loadScene(['cmain'], function (per) {
@@ -94,11 +95,11 @@
 								self.loadProcess(100);
 
 								self.page['cmain'] = gm.fla.getClass('cmain');
-								self.page['cloading'].container.addChild(self.page['cmain']);
-								annie.Tween.to(self.page['cloading'].loadBox,0.3,{
+								ploading.container.addChild(self.page['cmain']);
+								annie.Tween.to(ploading.loadBox,0.3,{
 									alpha: 0,
 									onComplete : function(){
-										self.page['cloading'].loadBox.visible = false;
+										ploading.loadBox.visible = false;
 									}
 								})
 								
@@ -126,6 +127,8 @@
 	var myapp = new MyApp;
 
 	window.initAPP = function (cb) {
+		if( myapp.isInited ) return;
+		myapp.isInited = true;
 		cb(myapp);
 	}
 }());
