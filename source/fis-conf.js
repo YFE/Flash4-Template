@@ -128,6 +128,9 @@ fis.media('pro').match('**', {
         fs.readFile(versionFilePath,'utf8',function(err,files){
             //console.log(files)
             var result = files.replace(/\?v=(\d+)('|")/g,"?v="+currVersion+"$2");
+
+            result = result.replace(/\/release\/v(\d+)\//g,"/release/prod/");
+            
             fs.writeFile(versionFilePath, result, 'utf8', function (err) {
                 if (err) return console.log(err);
             });
@@ -158,9 +161,9 @@ fis.media('prod').match('**', {
         });
         var fs = require('fs');
         fs.readFile(versionFilePath,'utf8',function(err,files){
-            var result = files.replace(/\/release\/v(\d+)\//g,"/release/v"+currVersion+"/");
+            var result = files.replace(/\/release\/(v(\d+)|prod)\//g,"/release/v"+currVersion+"/");
 
-            result = result.replace(/\?v=(\d+)('|")/g,"?v="+currVersion+"$2");
+            result = result.replace(/\?v=(\d+)('|")/g,"?v="+currVersion+"$2"); 
     
             fs.writeFile(versionFilePath, result, 'utf8', function (err) {
                 if (err) return console.log(err);
