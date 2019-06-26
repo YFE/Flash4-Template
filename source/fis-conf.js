@@ -35,6 +35,11 @@ fis.match('assets/js/libs/*.js', {
     release: ''
 });
 
+fis.match('assets/js/plugin/(*.js)', {
+    // packTo: 'base.js',
+    release: '$1'
+});
+
 // PLugin 文件夹 JS打包为一个文件
 // fis.match('assets/js/plugin/*.js', {
 //     packTo: 'plugin.js'
@@ -88,14 +93,28 @@ fis.match('assets/images/(*.{png,jpg,gif})', {
     release: '$1'
 });
 
+
 //输出 test 目录
 //fis3 release dev -d
 //fis3 release dev -d -w 如在后面再加上-w 为实时检测变化
 fis.media('dev').match('**', {
     deploy: [
         fis.plugin('replace', {
-            from: /(\"src\/\"\+[a-zA-Z]+\[\_\]\+\"\/\"\+)|(\"use strict\")/g,
-            to: ''
+            from: /(\"src\/\"\+[a-zA-Z]+\[\_\]\+\"\/\"\+)|(\"use strict\")|(\?v=\d+\))/g,
+            to: function($0){
+                // 使annie请求单文件时请求根目录路径，不带src/x/x路径
+                if( /\"src\/\"\+[a-zA-Z]+\[\_\]\+\"\/\"\+/.test($0) ){
+                    return '';
+                }
+                //使转换后的es5转回正常模式
+                if( /\"use strict\"/.test($0) ){
+                    return '';
+                }
+                // 替换CSS中的版本号
+                if( /\?v=\d+\)/g.test($0) ){
+                    return '?v='+currVersion+')';
+                }
+            }
         }),
         fis.plugin('skip-packed'),
         fis.plugin('local-deliver', {
@@ -141,7 +160,20 @@ fis.media('pro').match('**', {
     deploy: [
         fis.plugin('replace', {
             from: /(\"src\/\"\+[a-zA-Z]+\[\_\]\+\"\/\"\+)|(\"use strict\")/g,
-            to: ''
+            to: function($0){
+                // 使annie请求单文件时请求根目录路径，不带src/x/x路径
+                if( /\"src\/\"\+[a-zA-Z]+\[\_\]\+\"\/\"\+/.test($0) ){
+                    return '';
+                }
+                //使转换后的es5转回正常模式
+                if( /\"use strict\"/.test($0) ){
+                    return '';
+                }
+                // 替换CSS中的版本号
+                if( /\?v=\d+\)/g.test($0) ){
+                    return '?v='+currVersion+')';
+                }
+            }
         }),
         fis.plugin('skip-packed'),
         fis.plugin('local-deliver', {
@@ -175,7 +207,20 @@ fis.media('prod').match('**', {
     deploy: [
         fis.plugin('replace', {
             from: /(\"src\/\"\+[a-zA-Z]+\[\_\]\+\"\/\"\+)|(\"use strict\")/g,
-            to: ''
+            to: function($0){
+                // 使annie请求单文件时请求根目录路径，不带src/x/x路径
+                if( /\"src\/\"\+[a-zA-Z]+\[\_\]\+\"\/\"\+/.test($0) ){
+                    return '';
+                }
+                //使转换后的es5转回正常模式
+                if( /\"use strict\"/.test($0) ){
+                    return '';
+                }
+                // 替换CSS中的版本号
+                if( /\?v=\d+\)/g.test($0) ){
+                    return '?v='+currVersion+')';
+                }
+            }
         }),
         fis.plugin('skip-packed'),
         fis.plugin('local-deliver', {

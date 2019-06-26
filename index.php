@@ -29,6 +29,24 @@
 			title : "<?=$wxData['title']?>",
 			singleDesc : "<?=$wxData['singleDesc']?>"
 		};
+
+		//设置默认分享及JSSDK
+		gm.wxData.setDefault(__defaultWxData);
+		gm.wxData.getConfig('wx27cab28ef198a2dd',function(_data){
+			wx.config({
+				debug: false,
+				appId: _data.appId,
+				timestamp: _data.timestamp,
+				nonceStr: _data.nonceStr,
+				signature: _data.signature,
+				jsApiList: [
+					'onMenuShareTimeline',
+					'onMenuShareAppMessage',
+					'hideMenuItems',
+					'hideAllNonBaseMenuItem'
+				]
+			});
+		});
 	</script>
 </head>
 <body>
@@ -40,7 +58,6 @@
 		app.loadStart();
 		
 		wx.ready(function(){
-			gm.wxData.setDefault(__defaultWxData);
 			gm.wxData.share();
 		});
 	});

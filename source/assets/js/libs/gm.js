@@ -269,6 +269,21 @@
             }else {
                 cb();
             }
+        },
+        getConfig : function(_wxid,_callback){
+            $.ajax({
+                type: "GET",
+                dataType: "jsonp",
+                url: "https://we.igumo.cc/jsconfig.php?appid="+_wxid,
+                data: {
+                    url: location.href.split('#')[0]
+                },
+                success: function(_data) {
+                    if (_data.status == 1) {
+                        _callback(_data.data);
+                    }
+                }
+            });
         }
     };
 
