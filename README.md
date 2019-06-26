@@ -3,8 +3,8 @@
 
 ## 最近更新
 ### 2019-06-26
-*增加CSS引用图片版本号同步修改
-*增加默认JSSDK引用  
+* 增加CSS引用图片版本号同步修改
+* 增加默认JSSDK引用  
 
 ### 2019-06-21
 * 添加后缀 version参数
@@ -43,7 +43,6 @@ npm install -g fis-xxx-xxx
 
  - /app/
     - config.php `活动配置`
-
 - /fla/ `放置flash源文件`
     - /campaign/ `flash输出目录`
 - /source/ `源素材文件`
@@ -54,13 +53,16 @@ npm install -g fis-xxx-xxx
             - app.styl `动画页面样式`
             - page.styl `非动画页面开发使用样式，带px2rem转换`
         - /images/
-            - share.jpg `分享小图`
         - /js/
             - libs/\*.js `各种库文件 在输出时会合并为base.js`
             - plugin\*.js `其他插件，引用时需自行引入`
             - app.js `主程序文件`
     - /dist/   `flash输出后目标目录`
     - fis-conf.js `fis3配置文件`
+- /media/ 媒体资源文件夹
+    - share.jpg `分享小图`
+- /release/ 样式及动画资源文件夹
+
 - index.php `入口`
 
 ## 已引进可以直接使用的库
@@ -107,8 +109,12 @@ gulp build
 gulp released
 ```
 - 进入到 source ，运行 fis3 release dev -d -w 进行调测
-```
+```sh
 cd source
+# 调试模式
 fis3 release dev -d -w
+# 生产 - 版本号后缀模式
+fis3 release pro -d 
+# 生产 - 版本号文件夹模式
 fis3 release prod -d
 ```

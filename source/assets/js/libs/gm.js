@@ -203,7 +203,9 @@
         }
     }
 
-
+    var _wxDataCallBack = function(_app,_channel){
+        gm.ems.trigger('wx_share_success',_app,_channel);
+    }
     gm.wxData = global.wxData = {
         imgUrl: "",
         link: "",
@@ -217,9 +219,10 @@
                 link: wxData.link + (wxData.link.indexOf("?") > -1 ? "&" : "?") + "hmsr=share.wechat&hmpl=share.wechat.moments",
                 imgUrl: wxData.imgUrl,
                 success: function() {
-                    wxData.callback('timeline');
+                    _wxDataCallBack('wechat','timeline');
+                    gm.wxData.callback('timeline');
                     
-                    gm.tracker.event("share", 'share_timeline');
+                    gm.tracker.event("share", 'wx_share_timeline');
                 },
                 cancel: function() {
                     gm.tracker.event("share", 'timeline/cancel');
@@ -233,9 +236,10 @@
                 type: '',
                 dataUrl: '',
                 success: function() {
-                    wxData.callback('appmessage');
+                    _wxDataCallBack('wechat','appmessage');
+                    gm.wxData.callback('appmessage');
                     
-                    gm.tracker.event("share", 'share_appmessage');
+                    gm.tracker.event("share", 'wx_share_appmessage');
                 },
                 cancel: function() {
                     gm.tracker.event("share", 'appmessage/cancel');
@@ -298,7 +302,7 @@
                     n = /iphone|ipod|ipad/;
                 return e.test(t) ? "android" : n.test(t) ? "ios" : "pc"
             }(),
-            wechat: function () {
+            isWechat: function () {
                 return /micromessenger/.test(ua);
             }()
         }

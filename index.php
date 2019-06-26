@@ -47,6 +47,9 @@
 				]
 			});
 		});
+		wx.ready(function(){
+			gm.wxData.share();
+		});
 	</script>
 </head>
 <body>
@@ -54,12 +57,12 @@
 <script src="<?=$cdnUrl?>app.js<?=$version?>"></script>
 <script>
 	initAPP(function(app){
-		
 		app.loadStart();
-		
-		wx.ready(function(){
-			gm.wxData.share();
-		});
+
+		//分享成功事件
+		gm.ems.on('share_success',function(_app,_channel){
+			
+		})
 	});
 </script>
 </body>
