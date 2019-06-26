@@ -12,7 +12,7 @@
     $mediaUrl = "./media/";
     
     // 如果是线上环境
-    if( getenv(ENV) == 'production' ){
+    if( getenv('ENV') == 'production' ){
         $cdnUrl = "https://ts.o.gumo.pro/brand/campaign/release/v26143525/";
         $mediaUrl = "https://ts.o.gumo.pro/brand/campaign/media/";
     }
