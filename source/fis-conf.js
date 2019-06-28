@@ -143,6 +143,11 @@ var versionFilePath = '../app/config.php';
 
 fis.media('pro').match('**', {
     prepackager : function (content, file, settings) {
+        var exec = require('child_process').exec,child;
+        child = exec('rm -rf ../release/v*',function(err,out) {
+            console.log(out);
+            err && console.log(err);
+        });
         var fs = require('fs');
         fs.readFile(versionFilePath,'utf8',function(err,files){
             //console.log(files)
@@ -187,7 +192,7 @@ fis.media('pro').match('**', {
 fis.media('prod').match('**', {
     prepackager : function (content, file, settings) {
         var exec = require('child_process').exec,child;
-        child = exec('rm -rf ../release/*',function(err,out) {
+        child = exec('rm -rf ../release/v*',function(err,out) {
             console.log(out);
             err && console.log(err);
         });

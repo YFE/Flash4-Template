@@ -13,11 +13,11 @@
     
     // 如果是线上环境
     if( getenv('ENV') == 'production' ){
-        $cdnUrl = "https://ts.o.gumo.pro/brand/campaign/release/v26143525/";
+        $cdnUrl = "https://ts.o.gumo.pro/brand/campaign/release/prod/";
         $mediaUrl = "https://ts.o.gumo.pro/brand/campaign/media/";
     }
 
-    $version = '?v=26143525';
+    $version = '?v=28184213';
 
     // 微信默认分享设置
     $wxData = [

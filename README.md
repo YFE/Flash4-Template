@@ -2,6 +2,32 @@
 动画项目开发模板 for annie4 新版本
 
 ## 最近更新
+
+### 2019-6-28
+* 增加编译快捷命令 
+进入source后，运行sh命令
+```sh
+sh hi dev|pro|prod [fla]
+```
+举例说明：
+1. 测试模式
+```sh
+sh hi dev
+```
+等于同
+```sh
+fis3 release dev -d -w
+```
+2. 重新编译FLA的测试模式
+```sh
+sh hi dev fla
+```
+等于同
+```sh
+cd ../fla/campaign && gulp build && gulp released && cd ../../source && fis3 release dev -d -w
+```
+
+
 ### 2019-06-26
 * 添加PHP获取环境变量引号，避免报错
 * 调整分享设置位置，增加分享成功全局事件
@@ -12,8 +38,6 @@
 * 添加后缀 version参数
 * 增加 fis3 release pro -d 固定版本文件夹方式
 
-### 2019-6-13
-* 修改lodash.js的throttle，改trailing值默认为false，使得调用时可直接使用 _.throttle(fn,500); 来使用。
 
 
 ## 使用步骤
