@@ -7,7 +7,8 @@ fis.set('project.ignore', [
     'dist/src/Main.js',
     'dist/index.html',
     'fis-conf.js',
-    '.DS_Store'
+    '.DS_Store',
+    'hi'
 ]);
 
 fis.match('::package', {
@@ -48,7 +49,7 @@ fis.match('assets/js/plugin/(*.js)', {
 
 fis.match('assets/js/(*.js)', {
     // 添加es6 转换支持
-    parser: fis.plugin('babel-6.x'), 
+    parser: fis.plugin('babel-latest'), 
     optimizer: fis.plugin('uglify-js'),
     release: '$1'
 });
