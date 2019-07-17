@@ -203,9 +203,6 @@
         }
     }
 
-    var _wxDataCallBack = function(_app,_channel){
-        gm.ems.trigger('wx_share_success',_app,_channel);
-    }
     gm.wxData = global.wxData = {
         imgUrl: "",
         link: "",
@@ -219,7 +216,6 @@
                 link: wxData.link + (wxData.link.indexOf("?") > -1 ? "&" : "?") + "hmsr=share.wechat&hmpl=share.wechat.moments",
                 imgUrl: wxData.imgUrl,
                 success: function() {
-                    _wxDataCallBack('wechat','timeline');
                     gm.wxData.callback('timeline');
                     
                     gm.tracker.event("share", 'wx_share_timeline');
@@ -236,7 +232,6 @@
                 type: '',
                 dataUrl: '',
                 success: function() {
-                    _wxDataCallBack('wechat','appmessage');
                     gm.wxData.callback('appmessage');
                     
                     gm.tracker.event("share", 'wx_share_appmessage');
@@ -251,7 +246,9 @@
             $('meta[itemprop="image"]').attr('content', wxData.imgUrl);
             $('meta[itemprop="description"]').attr('content', wxData.singleDesc);
         },
-        callback: function() {},
+        callback: function(_channel) {
+            gm.ems.trigger('wx_share_success','wechat',_channel);
+        },
         setDefault: function (_defaultWxData) {
             try {
                 gm.wxData.imgUrl = _defaultWxData.imgUrl;
@@ -262,7 +259,7 @@
             } catch (e) {}
         },
         fire: function (cb) {
-            if ( gm.env.wechat ) {
+            if ( gm.env.isWechat && gm.env.os == 'ios' ) {
                 if (typeof WeixinJSBridge == "object") {
                     WeixinJSBridge.invoke('getNetworkType', {}, cb);
                 } else {
