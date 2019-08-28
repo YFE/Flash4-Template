@@ -247,7 +247,7 @@
             $('meta[itemprop="description"]').attr('content', wxData.singleDesc);
         },
         callback: function(_channel) {
-            gm.ems.trigger('wx_share_success','wechat',_channel);
+            gm.ems.trigger('share_success','wechat',_channel);
         },
         setDefault: function (_defaultWxData) {
             try {
