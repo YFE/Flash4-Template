@@ -101,10 +101,10 @@ fis.match('assets/images/(*.{png,jpg,gif})', {
 fis.media('dev').match('**', {
     deploy: [
         fis.plugin('replace', {
-            from: /(\"src\/\"\+[a-zA-Z]+\[\_\]\+\"\/\"\+)|(\"use strict\")|(\?v=\d+\))/g,
+            from: /(\"src\/\"\+[a-zA-Z]+\[[a-zA-Z\_]\]\+\"\/\"\+)|(\"use strict\")|(\?v=\d+\))/g,
             to: function($0){
                 // 使annie请求单文件时请求根目录路径，不带src/x/x路径
-                if( /\"src\/\"\+[a-zA-Z]+\[\_\]\+\"\/\"\+/.test($0) ){
+                if( /\"src\/\"\+[a-zA-Z]+\[[a-zA-Z\_]\]\+\"\/\"\+/.test($0) ){
                     return '';
                 }
                 //使转换后的es5转回正常模式
@@ -165,10 +165,10 @@ fis.media('pro').match('**', {
     },
     deploy: [
         fis.plugin('replace', {
-            from: /(\"src\/\"\+[a-zA-Z]+\[\_\]\+\"\/\"\+)|(\"use strict\")/g,
+            from: /(\"src\/\"\+[a-zA-Z]+\[[a-zA-Z\_]+\]\+\"\/\"\+)|(\"use strict\")/g,
             to: function($0){
                 // 使annie请求单文件时请求根目录路径，不带src/x/x路径
-                if( /\"src\/\"\+[a-zA-Z]+\[\_\]\+\"\/\"\+/.test($0) ){
+                if( /\"src\/\"\+[a-zA-Z]+\[[a-zA-Z\_]\]\+\"\/\"\+/.test($0) ){
                     return '';
                 }
                 //使转换后的es5转回正常模式
@@ -212,10 +212,10 @@ fis.media('prod').match('**', {
     },
     deploy: [
         fis.plugin('replace', {
-            from: /(\"src\/\"\+[a-zA-Z]+\[\_\]\+\"\/\"\+)|(\"use strict\")/g,
+            from: /(\"src\/\"\+[a-zA-Z]+\[[a-zA-Z\_]\]\+\"\/\"\+)|(\"use strict\")/g,
             to: function($0){
                 // 使annie请求单文件时请求根目录路径，不带src/x/x路径
-                if( /\"src\/\"\+[a-zA-Z]+\[\_\]\+\"\/\"\+/.test($0) ){
+                if( /\"src\/\"\+[a-zA-Z]+\[[a-zA-Z\_]\]\+\"\/\"\+/.test($0) ){
                     return '';
                 }
                 //使转换后的es5转回正常模式

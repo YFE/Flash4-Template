@@ -45,7 +45,7 @@
 			// self.stage = new annie.Stage('app', self.initHeight, 800, 30, annie.StageScaleMode.FIXED_WIDTH, 0);
 
 			self.stage.autoSteering = false;
-			self.stage.autoResize = false;
+			// self.stage.autoResize = false;
 
 			self.stage.addEventListener(annie.Event.ON_INIT_STAGE, function on_init_stage(e) {
 				annie.loadScene(['cloading'], function (per) {
@@ -69,10 +69,10 @@
 							// self.stage.desWidth = self.initHeight;
 							// ploading.x = self.suitHeight;
 
-							self.stage.autoResize = true;
-							_.delay(function(){
-								self.stage.autoResize = false;
-							},150)
+							// self.stage.autoResize = true;
+							// _.delay(function(){
+							// 	self.stage.autoResize = false;
+							// },150)
 						}, 100, {
 							trailing : false
 						}));
