@@ -73,7 +73,7 @@
 							// _.delay(function(){
 							// 	self.stage.autoResize = false;
 							// },150)
-						}, 100, {
+						}, 16, {
 							trailing : false
 						}));
 
@@ -93,7 +93,7 @@
 						}, function (result) {
 							if (result.sceneId == result.sceneTotal) {
 								self.loadProcess(100);
-
+								
 								self.page['cmain'] = gm.fla.getClass('cmain');
 								ploading.container.addChild(self.page['cmain']);
 								annie.Tween.to(ploading.loadBox,0.3,{

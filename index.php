@@ -1,5 +1,5 @@
 <?php
-    include "app/config.php";
+	include "app/config.php";
 ?>
 <!DOCTYPE html>
 <html>
@@ -13,9 +13,9 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,shrink-to-fit=no">
 	<style> .hide { display:none; } </style>
 	<link rel="stylesheet" href="<?=$cdnUrl?>app.css<?=$version?>">
-	<!-- <link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/2.0.0/weui.min.css"> -->
-   	<!-- <script src="https://res.wx.qq.com/open/libs/weuijs/1.1.4/weui.min.js"></script> -->
-   	<script src="https://res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
+    <!-- <link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/2.1.3/weui.min.css" /> -->
+	<!-- <script src="https://res.wx.qq.com/open/libs/weuijs/1.2.1/weui.min.js"></script> -->
+	<script src="https://res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
    	<script src="<?=$cdnUrl?>base.js<?=$version?>"></script>
 	<script>
 		var	__cdnurl = "<?=$cdnUrl?>";
