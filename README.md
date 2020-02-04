@@ -7,8 +7,14 @@
 2. 修复iOS新系统下输入框不回弹问题
 3. 去掉不自动resizey设置
 
-### 2019-6-28
-* 增加编译快捷命令 
+### 2020-02-04
+1. 更新annie至3.2.0
+2. 更换默认压缩文件后缀为webp，
+3. 更换默认类为ES6 class
+
+
+## 增加编译快捷命令 
+
 进入source后，运行sh命令
 ```sh
 sh hi dev|pro|prod [fla]
@@ -30,19 +36,6 @@ sh hi dev fla
 ```sh
 cd ../fla/campaign && gulp build && gulp released && cd ../../source && fis3 release dev -d -w
 ```
-
-
-### 2019-06-26
-* 添加PHP获取环境变量引号，避免报错
-* 调整分享设置位置，增加分享成功全局事件
-* 增加CSS引用图片版本号同步修改
-* 增加默认JSSDK引用 
-
-### 2019-06-21
-* 添加后缀 version参数
-* 增加 fis3 release pro -d 固定版本文件夹方式
-
-
 
 ## 使用步骤
 
