@@ -5,7 +5,7 @@
   "version": "1.0.0",
   "description": "通过Flash2x工具转换的项目.",
   "main": "index.html",
-  "suffixName": ".swf",
+  "suffixName": ".webp",
   "scripts": {
     "test": "echo \"Weclome to Annie2x!\" && exit 1"
   },

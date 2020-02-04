@@ -5,10 +5,11 @@
 	 */
 	var ems = new gm.EM;
 	
-
-	var MyApp = function () {}
-	var __MyAppPrototype =  {
-		loadStart: function () {
+	class MyApp {
+		constructor (){
+			this.page = {}
+		}
+		loadStart () {
 			var self = this;
 			/*
 			 * 添加事件别名
@@ -21,13 +22,13 @@
 			 * 设计尺寸 800 1280，安全范围 640 1040 居中
 			 */
 			$(window).on('resize', function on_resize() {
-				var _selfBox = $("#app");
+				let _selfBox = $("#app");
 				// 当前屏幕宽高从低至高排序
-				var _selfwh = _.sortBy([_selfBox.width(), _selfBox.height()]);
+				let _selfwh = _.sortBy([_selfBox.width(), _selfBox.height()]);
 				// 当前屏幕长边换算长度
-				var _screenHeight = _selfwh[1] / (_selfwh[0] / 640);
+				let _screenHeight = _selfwh[1] / (_selfwh[0] / 640);
 				//传入 stage 的 设计长边长度
-				var _desHeight = _screenHeight <= 1040 ? 1040 : _screenHeight;
+				let _desHeight = _screenHeight <= 1040 ? 1040 : _screenHeight;
 				//画面居中间距
 				self.suitHeight = -(1280 - _desHeight > 0 ? 1280 - _desHeight : 0) / 2 + (_screenHeight > 1280 ? (_screenHeight - 1280) / 2 : 0);
 				self.initHeight = _desHeight;
@@ -37,7 +38,7 @@
 
 			//单文件模式
 			annie._isReleased= __version.replace('?v=','');
-			annie.suffixName = '.swf';
+			annie.suffixName = '.webp';
 
 			self.stage = new annie.Stage('app', 800, self.initHeight, 30, annie.StageScaleMode.FIXED_HEIGHT, 0);
 
@@ -53,7 +54,7 @@
 				}, function (result) {
 					if (result.sceneId == result.sceneTotal) {
 						
-						var ploading = self.page['cloading'] = gm.fla.getClass('cloading');
+						let ploading = self.page['cloading'] = gm.fla.getClass('cloading');
 						// 全面屏 竖屏设计
 						ploading.y = self.suitHeight;
 
@@ -93,38 +94,37 @@
 						}, function (result) {
 							if (result.sceneId == result.sceneTotal) {
 								self.loadProcess(100);
-								
-								self.page['cmain'] = gm.fla.getClass('cmain');
-								ploading.container.addChild(self.page['cmain']);
-								annie.Tween.to(ploading.loadBox,0.3,{
-									alpha: 0,
-									onComplete : function(){
-										ploading.loadBox.visible = false;
-									}
-								})
-								
 								self.loadComplete();
-								gm.load();
 							}
 						}, __cdnurl);
 					}
 				}, __cdnurl);
 			});
-		},
-		loadProcess: function (_per) {},
-		loadComplete: function () {
+		}
+		loadProcess (_per) {}
+		loadComplete () {
 			this.init();
-		},
-		page: {},
-		init: function () {
-			var self = this;
+
+			this.page['cmain'] = gm.fla.getClass('cmain');
+			this.page['cloading'].container.addChild(this.page['cmain']);
+
+			annie.Tween.to(this.page['cloading'].loadBox,0.3,{
+				alpha: 0,
+				onComplete : ()=>{
+					this.page['cloading'].loadBox.visible = false;
+				}
+			});
+
+			gm.load();
+		}
+		init () {
+			let self = this;
 
 			
 		}
-	};
-	
-	MyApp.prototype = __MyAppPrototype;
-	var myapp = new MyApp;
+	}
+
+	let myapp = new MyApp;
 
 	window.initAPP = function (cb) {
 		if( myapp.isInited ) return;

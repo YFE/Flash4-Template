@@ -55,7 +55,7 @@ fis.match('assets/js/(*.js)', {
 });
 
 
-fis.match('dist/**/(*.{js,swf,json,zip,txt,mp4})', {
+fis.match('dist/**/(*.{js,swf,json,zip,txt,webp})', {
     release: '$1'
 });
 

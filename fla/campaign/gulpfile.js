@@ -158,9 +158,9 @@ function initMergeFile(){
             }
             gulp.src('../../source/assets/js/libs/swfsize.js').pipe(replace("\"#swfBytes#\"", JSON.stringify(fileSizeArr))).pipe(gulp.dest("../../source/assets/js/libs/"));
             // //是否需要更改后缀
-            // if(projectInfo.suffixName!=".swf"){
-            //     gulp.src('../../released/**/base.js').pipe(replace("\".swf\"", "\""+projectInfo.suffixName+"\"")).pipe(gulp.dest("../../source/dist/"));
-            // }
+            if(projectInfo.suffixName!=".swf"){
+                gulp.src('../../released/**/base.js').pipe(replace("\".swf\"", "\""+projectInfo.suffixName+"\"")).pipe(gulp.dest("../../source/dist/"));
+            }
         })
         console.log("打包结束!");
     }
